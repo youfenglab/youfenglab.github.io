@@ -20,8 +20,6 @@ page-layout: full
 
 # My latest projects
 
-## 1
-
 :::{#Projects}
 :::
 
