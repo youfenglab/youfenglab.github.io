@@ -1,6 +1,8 @@
 # Options applied to all files in this folder
 
+# freeze computational output
+freeze: true
+
 title-block-banner: false
 toc: true
-execute: 
-  freeze: true
+

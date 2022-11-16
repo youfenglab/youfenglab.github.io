@@ -7,13 +7,16 @@ listing:
     max-items: 3
     grid-columns: 3
     fields: [image, title, description, categories]
+    image-height: 330px
+    max-description-length: 500
     sort: "date desc"
   - id: posts
     contents: posts/nbs
     type: grid
     max-items: 6
     grid-columns: 3
-    fields: [image, title, description, date]
+    fields: [image, title, description, date, categories]
+    max-description-length: 500
     sort: "date desc"  
 page-layout: full
 ---

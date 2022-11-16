@@ -4,11 +4,12 @@ listing:
   contents: nbs
   sort: "date desc"
   type: grid
-  grid-columns: 3
-  # categories: true
-  fields: [image, title, description, categories]
+  grid-columns: 1
+  categories: true
+  fields: [title, description, categories, date]
   sort-ui: false
   filter-ui: false
+  max-description-length: 300
 page-layout: full
 ---
 
