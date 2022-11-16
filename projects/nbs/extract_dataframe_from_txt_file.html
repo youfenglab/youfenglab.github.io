@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.226">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-10-23">
+<meta name="description" content="This notebook shows matching text pattern and extract text and processing strings using Regex.">
+
+<title>Youfeng Zhou - Extracting and grouping text info by category</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Youfeng Zhou - Extracting and grouping text info by category">
+<meta property="og:description" content="This notebook shows matching text pattern and extract text and processing strings using Regex.">
+<meta property="og:site-name" content="Youfeng Zhou">
+<meta name="twitter:title" content="Youfeng Zhou - Extracting and grouping text info by category">
+<meta name="twitter:description" content="This notebook shows matching text pattern and extract text and processing strings using Regex.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Youfeng Zhou</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects/index.html">
+ <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts/index.html">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../tils/index.html">
+ <span class="menu-text">TILs</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/youfenglab"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Joe_zhou14"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-the-text-file" id="toc-about-the-text-file" class="nav-link active" data-scroll-target="#about-the-text-file">About the text file:</a></li>
+  <li><a href="#the-goal" id="toc-the-goal" class="nav-link" data-scroll-target="#the-goal">The goal</a></li>
+  <li><a href="#import-packages" id="toc-import-packages" class="nav-link" data-scroll-target="#import-packages">Import packages</a></li>
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data">Load the data</a></li>
+  <li><a href="#define-a-function-to-extract-all-the-descriptions-about-the-79-explanatory-variables-and-check-the-data-type." id="toc-define-a-function-to-extract-all-the-descriptions-about-the-79-explanatory-variables-and-check-the-data-type." class="nav-link" data-scroll-target="#define-a-function-to-extract-all-the-descriptions-about-the-79-explanatory-variables-and-check-the-data-type.">Define a function to extract all the descriptions about the 79 explanatory variables and check the data type.</a></li>
+  <li><a href="#define-a-function-to-extract-all-the-information-about-each-category-variables-codes." id="toc-define-a-function-to-extract-all-the-information-about-each-category-variables-codes." class="nav-link" data-scroll-target="#define-a-function-to-extract-all-the-information-about-each-category-variables-codes.">Define a function to extract all the information about each category variable’s codes.</a></li>
+  <li><a href="#create-pandas-dataframe-and-save-them-as-csv-files." id="toc-create-pandas-dataframe-and-save-them-as-csv-files." class="nav-link" data-scroll-target="#create-pandas-dataframe-and-save-them-as-csv-files.">Create pandas dataframe and save them as <code>csv</code> files.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Extracting and grouping text info by category</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">data cleaning</div>
+    <div class="quarto-category">regex</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    This notebook shows matching text pattern and extract text and processing strings using Regex.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 23, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="about-the-text-file" class="level3">
+<h3 class="anchored" data-anchor-id="about-the-text-file">About the text file:</h3>
+<p>The text file we will work on is a data description file which is part of the Kaggle dataset. The file is used to describe all of the 79 explanatory variables (features) and the meaning of each corresponding category variable’s code.</p>
+</section>
+<section id="the-goal" class="level3">
+<h3 class="anchored" data-anchor-id="the-goal">The goal</h3>
+<p>The goal of this project is to extract the information about the explanatory variables and category variables’ codes, then create a seperate pandas dataframe for each one and save as <code>csv</code> file for downstream tasks.</p>
+</section>
+<section id="import-packages" class="level3">
+<h3 class="anchored" data-anchor-id="import-packages">Import packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.utils <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-data">Load the data</h3>
+<p>The path of the Kaggle dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> Path(<span class="st">'./house-prices-advanced-regression-techniques/'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Have a look at the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> pd.read_csv(path<span class="op">/</span><span class="st">'train.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>train_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(1460, 81)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_df.tail().iloc[:, <span class="op">-</span><span class="dv">5</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+      <th>SalePrice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1455</th>
+      <td>8</td>
+      <td>2007</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>175000</td>
+    </tr>
+    <tr>
+      <th>1456</th>
+      <td>2</td>
+      <td>2010</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>210000</td>
+    </tr>
+    <tr>
+      <th>1457</th>
+      <td>5</td>
+      <td>2010</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>266500</td>
+    </tr>
+    <tr>
+      <th>1458</th>
+      <td>4</td>
+      <td>2010</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>142125</td>
+    </tr>
+    <tr>
+      <th>1459</th>
+      <td>6</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>147500</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>test_df <span class="op">=</span> pd.read_csv(path<span class="op">/</span><span class="st">'test.csv'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>test_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(1459, 80)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>test_df.tail().iloc[:, <span class="op">-</span><span class="dv">5</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1454</th>
+      <td>0</td>
+      <td>6</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>1455</th>
+      <td>0</td>
+      <td>4</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Abnorml</td>
+    </tr>
+    <tr>
+      <th>1456</th>
+      <td>0</td>
+      <td>9</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Abnorml</td>
+    </tr>
+    <tr>
+      <th>1457</th>
+      <td>700</td>
+      <td>7</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>1458</th>
+      <td>0</td>
+      <td>11</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Normal</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>train_df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 81 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   Id             1460 non-null   int64  
+ 1   MSSubClass     1460 non-null   int64  
+ 2   MSZoning       1460 non-null   object 
+ 3   LotFrontage    1201 non-null   float64
+ 4   LotArea        1460 non-null   int64  
+ 5   Street         1460 non-null   object 
+ 6   Alley          91 non-null     object 
+ 7   LotShape       1460 non-null   object 
+ 8   LandContour    1460 non-null   object 
+ 9   Utilities      1460 non-null   object 
+ 10  LotConfig      1460 non-null   object 
+ 11  LandSlope      1460 non-null   object 
+ 12  Neighborhood   1460 non-null   object 
+ 13  Condition1     1460 non-null   object 
+ 14  Condition2     1460 non-null   object 
+ 15  BldgType       1460 non-null   object 
+ 16  HouseStyle     1460 non-null   object 
+ 17  OverallQual    1460 non-null   int64  
+ 18  OverallCond    1460 non-null   int64  
+ 19  YearBuilt      1460 non-null   int64  
+ 20  YearRemodAdd   1460 non-null   int64  
+ 21  RoofStyle      1460 non-null   object 
+ 22  RoofMatl       1460 non-null   object 
+ 23  Exterior1st    1460 non-null   object 
+ 24  Exterior2nd    1460 non-null   object 
+ 25  MasVnrType     1452 non-null   object 
+ 26  MasVnrArea     1452 non-null   float64
+ 27  ExterQual      1460 non-null   object 
+ 28  ExterCond      1460 non-null   object 
+ 29  Foundation     1460 non-null   object 
+ 30  BsmtQual       1423 non-null   object 
+ 31  BsmtCond       1423 non-null   object 
+ 32  BsmtExposure   1422 non-null   object 
+ 33  BsmtFinType1   1423 non-null   object 
+ 34  BsmtFinSF1     1460 non-null   int64  
+ 35  BsmtFinType2   1422 non-null   object 
+ 36  BsmtFinSF2     1460 non-null   int64  
+ 37  BsmtUnfSF      1460 non-null   int64  
+ 38  TotalBsmtSF    1460 non-null   int64  
+ 39  Heating        1460 non-null   object 
+ 40  HeatingQC      1460 non-null   object 
+ 41  CentralAir     1460 non-null   object 
+ 42  Electrical     1459 non-null   object 
+ 43  1stFlrSF       1460 non-null   int64  
+ 44  2ndFlrSF       1460 non-null   int64  
+ 45  LowQualFinSF   1460 non-null   int64  
+ 46  GrLivArea      1460 non-null   int64  
+ 47  BsmtFullBath   1460 non-null   int64  
+ 48  BsmtHalfBath   1460 non-null   int64  
+ 49  FullBath       1460 non-null   int64  
+ 50  HalfBath       1460 non-null   int64  
+ 51  BedroomAbvGr   1460 non-null   int64  
+ 52  KitchenAbvGr   1460 non-null   int64  
+ 53  KitchenQual    1460 non-null   object 
+ 54  TotRmsAbvGrd   1460 non-null   int64  
+ 55  Functional     1460 non-null   object 
+ 56  Fireplaces     1460 non-null   int64  
+ 57  FireplaceQu    770 non-null    object 
+ 58  GarageType     1379 non-null   object 
+ 59  GarageYrBlt    1379 non-null   float64
+ 60  GarageFinish   1379 non-null   object 
+ 61  GarageCars     1460 non-null   int64  
+ 62  GarageArea     1460 non-null   int64  
+ 63  GarageQual     1379 non-null   object 
+ 64  GarageCond     1379 non-null   object 
+ 65  PavedDrive     1460 non-null   object 
+ 66  WoodDeckSF     1460 non-null   int64  
+ 67  OpenPorchSF    1460 non-null   int64  
+ 68  EnclosedPorch  1460 non-null   int64  
+ 69  3SsnPorch      1460 non-null   int64  
+ 70  ScreenPorch    1460 non-null   int64  
+ 71  PoolArea       1460 non-null   int64  
+ 72  PoolQC         7 non-null      object 
+ 73  Fence          281 non-null    object 
+ 74  MiscFeature    54 non-null     object 
+ 75  MiscVal        1460 non-null   int64  
+ 76  MoSold         1460 non-null   int64  
+ 77  YrSold         1460 non-null   int64  
+ 78  SaleType       1460 non-null   object 
+ 79  SaleCondition  1460 non-null   object 
+ 80  SalePrice      1460 non-null   int64  
+dtypes: float64(3), int64(35), object(43)
+memory usage: 924.0+ KB</code></pre>
+</div>
+</div>
+<p>From the above, we know that train set (except the dependent valiable <code>SalePrice</code>) and test set both have 79 explanatory variables (excluding <code>Id</code>).</p>
+<p>All the independent variables are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ind_vars <span class="op">=</span> train_df.columns[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ind_vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index(['MSSubClass', 'MSZoning', 'LotFrontage', 'LotArea', 'Street', 'Alley',
+       'LotShape', 'LandContour', 'Utilities', 'LotConfig', 'LandSlope',
+       'Neighborhood', 'Condition1', 'Condition2', 'BldgType', 'HouseStyle',
+       'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd', 'RoofStyle',
+       'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType', 'MasVnrArea',
+       'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond',
+       'BsmtExposure', 'BsmtFinType1', 'BsmtFinSF1', 'BsmtFinType2',
+       'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', 'Heating', 'HeatingQC',
+       'CentralAir', 'Electrical', '1stFlrSF', '2ndFlrSF', 'LowQualFinSF',
+       'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath',
+       'BedroomAbvGr', 'KitchenAbvGr', 'KitchenQual', 'TotRmsAbvGrd',
+       'Functional', 'Fireplaces', 'FireplaceQu', 'GarageType', 'GarageYrBlt',
+       'GarageFinish', 'GarageCars', 'GarageArea', 'GarageQual', 'GarageCond',
+       'PavedDrive', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
+       'ScreenPorch', 'PoolArea', 'PoolQC', 'Fence', 'MiscFeature', 'MiscVal',
+       'MoSold', 'YrSold', 'SaleType', 'SaleCondition'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(ind_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>79</code></pre>
+</div>
+</div>
+<p>Among the independent variables, some are numerical variables, others are category variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> train_df.select_dtypes(include<span class="op">=</span>np.number).columns <span class="co"># numeric columns</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>num_cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index(['Id', 'MSSubClass', 'LotFrontage', 'LotArea', 'OverallQual',
+       'OverallCond', 'YearBuilt', 'YearRemodAdd', 'MasVnrArea', 'BsmtFinSF1',
+       'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
+       'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath',
+       'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd',
+       'Fireplaces', 'GarageYrBlt', 'GarageCars', 'GarageArea', 'WoodDeckSF',
+       'OpenPorchSF', 'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea',
+       'MiscVal', 'MoSold', 'YrSold', 'SalePrice'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> train_df.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns <span class="co"># category columns</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cat_cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index(['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities',
+       'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2',
+       'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st',
+       'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation',
+       'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2',
+       'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',
+       'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual',
+       'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature',
+       'SaleType', 'SaleCondition'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<p>Let have a look at the data description file: <code>data_description.txt</code></p>
+<p>The first 30 lines is as below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>head <span class="op">-</span>n <span class="dv">30</span> {path<span class="op">/</span><span class="st">'data_description.txt'</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSSubClass: Identifies the type of dwelling involved in the sale.   
+
+        20  1-STORY 1946 &amp; NEWER ALL STYLES
+        30  1-STORY 1945 &amp; OLDER
+        40  1-STORY W/FINISHED ATTIC ALL AGES
+        45  1-1/2 STORY - UNFINISHED ALL AGES
+        50  1-1/2 STORY FINISHED ALL AGES
+        60  2-STORY 1946 &amp; NEWER
+        70  2-STORY 1945 &amp; OLDER
+        75  2-1/2 STORY ALL AGES
+        80  SPLIT OR MULTI-LEVEL
+        85  SPLIT FOYER
+        90  DUPLEX - ALL STYLES AND AGES
+       120  1-STORY PUD (Planned Unit Development) - 1946 &amp; NEWER
+       150  1-1/2 STORY PUD - ALL AGES
+       160  2-STORY PUD - 1946 &amp; NEWER
+       180  PUD - MULTILEVEL - INCL SPLIT LEV/FOYER
+       190  2 FAMILY CONVERSION - ALL STYLES AND AGES
+
+MSZoning: Identifies the general zoning classification of the sale.
+        
+       A    Agriculture
+       C    Commercial
+       FV   Floating Village Residential
+       I    Industrial
+       RH   Residential High Density
+       RL   Residential Low Density
+       RP   Residential Low Density Park 
+       RM   Residential Medium Density
+    </code></pre>
+</div>
+</div>
+<p>Let grep the lines with <code>MS</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>grep MS {path<span class="op">/</span><span class="st">'data_description.txt'</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MSSubClass: Identifies the type of dwelling involved in the sale.   
+MSZoning: Identifies the general zoning classification of the sale.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>rg MS {path<span class="op">/</span><span class="st">'data_description.txt'</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1:MSSubClass: Identifies the type of dwelling involved in the sale. 
+20:MSZoning: Identifies the general zoning classification of the sale.</code></pre>
+</div>
+</div>
+<p>Read the text file and split lines into a list</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>desc <span class="op">=</span> (path<span class="op">/</span><span class="st">'data_description.txt'</span>).read_text().splitlines()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>desc[:<span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['MSSubClass: Identifies the type of dwelling involved in the sale.\t',
+ '',
+ '        20\t1-STORY 1946 &amp; NEWER ALL STYLES',
+ '        30\t1-STORY 1945 &amp; OLDER',
+ '        40\t1-STORY W/FINISHED ATTIC ALL AGES',
+ '        45\t1-1/2 STORY - UNFINISHED ALL AGES',
+ '        50\t1-1/2 STORY FINISHED ALL AGES',
+ '        60\t2-STORY 1946 &amp; NEWER',
+ '        70\t2-STORY 1945 &amp; OLDER',
+ '        75\t2-1/2 STORY ALL AGES',
+ '        80\tSPLIT OR MULTI-LEVEL',
+ '        85\tSPLIT FOYER',
+ '        90\tDUPLEX - ALL STYLES AND AGES',
+ '       120\t1-STORY PUD (Planned Unit Development) - 1946 &amp; NEWER',
+ '       150\t1-1/2 STORY PUD - ALL AGES',
+ '       160\t2-STORY PUD - 1946 &amp; NEWER',
+ '       180\tPUD - MULTILEVEL - INCL SPLIT LEV/FOYER',
+ '       190\t2 FAMILY CONVERSION - ALL STYLES AND AGES',
+ '',
+ 'MSZoning: Identifies the general zoning classification of the sale.',
+ '\t\t',
+ '       A\tAgriculture',
+ '       C\tCommercial',
+ '       FV\tFloating Village Residential',
+ '       I\tIndustrial',
+ '       RH\tResidential High Density',
+ '       RL\tResidential Low Density',
+ '       RP\tResidential Low Density Park ',
+ '       RM\tResidential Medium Density',
+ '\t']</code></pre>
+</div>
+</div>
+<p>Remove all the empty lines.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>desc <span class="op">=</span> [i <span class="cf">for</span> i <span class="kw">in</span> desc <span class="cf">if</span> <span class="bu">len</span>(i.strip()) <span class="op">!=</span> <span class="dv">0</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>desc[:<span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['MSSubClass: Identifies the type of dwelling involved in the sale.\t',
+ '        20\t1-STORY 1946 &amp; NEWER ALL STYLES',
+ '        30\t1-STORY 1945 &amp; OLDER',
+ '        40\t1-STORY W/FINISHED ATTIC ALL AGES',
+ '        45\t1-1/2 STORY - UNFINISHED ALL AGES',
+ '        50\t1-1/2 STORY FINISHED ALL AGES',
+ '        60\t2-STORY 1946 &amp; NEWER',
+ '        70\t2-STORY 1945 &amp; OLDER',
+ '        75\t2-1/2 STORY ALL AGES',
+ '        80\tSPLIT OR MULTI-LEVEL',
+ '        85\tSPLIT FOYER',
+ '        90\tDUPLEX - ALL STYLES AND AGES',
+ '       120\t1-STORY PUD (Planned Unit Development) - 1946 &amp; NEWER',
+ '       150\t1-1/2 STORY PUD - ALL AGES',
+ '       160\t2-STORY PUD - 1946 &amp; NEWER',
+ '       180\tPUD - MULTILEVEL - INCL SPLIT LEV/FOYER',
+ '       190\t2 FAMILY CONVERSION - ALL STYLES AND AGES',
+ 'MSZoning: Identifies the general zoning classification of the sale.',
+ '       A\tAgriculture',
+ '       C\tCommercial',
+ '       FV\tFloating Village Residential',
+ '       I\tIndustrial',
+ '       RH\tResidential High Density',
+ '       RL\tResidential Low Density',
+ '       RP\tResidential Low Density Park ',
+ '       RM\tResidential Medium Density',
+ 'LotFrontage: Linear feet of street connected to property',
+ 'LotArea: Lot size in square feet',
+ 'Street: Type of road access to property',
+ '       Grvl\tGravel\t']</code></pre>
+</div>
+</div>
+<p>After looking at the above text file, we noticed that the data types of some independent variables are incorrect.</p>
+<p>Let fix it.</p>
+</section>
+<section id="define-a-function-to-extract-all-the-descriptions-about-the-79-explanatory-variables-and-check-the-data-type." class="level3">
+<h3 class="anchored" data-anchor-id="define-a-function-to-extract-all-the-descriptions-about-the-79-explanatory-variables-and-check-the-data-type.">Define a function to extract all the descriptions about the 79 explanatory variables and check the data type.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> var_desc(txt, ind_vars):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> {}</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    cat <span class="op">=</span> {}</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, t <span class="kw">in</span> <span class="bu">enumerate</span>(txt):</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        rt <span class="op">=</span> re.findall(<span class="vs">r'(\S+): ([^\t?]+)'</span>, t)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> rt:</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> rt[<span class="dv">0</span>][<span class="dv">0</span>] <span class="kw">in</span> ind_vars:</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                d[rt[<span class="dv">0</span>][<span class="dv">0</span>]] <span class="op">=</span> rt[<span class="dv">0</span>][<span class="dv">1</span>]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> txt[i<span class="op">+</span><span class="dv">1</span>].startswith(<span class="st">' '</span>):</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>                    cat[rt[<span class="dv">0</span>][<span class="dv">0</span>]] <span class="op">=</span> <span class="st">'Category'</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame(d.items(), columns<span class="op">=</span>[<span class="st">'Variable'</span>, <span class="st">'Variabe_Description'</span>])</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Variable_Type'</span>] <span class="op">=</span> df.Variable.<span class="bu">map</span>(cat).fillna(<span class="st">'Numerical'</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> var_desc(desc, ind_vars)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Variable</th>
+      <th>Variabe_Description</th>
+      <th>Variable_Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>MSSubClass</td>
+      <td>Identifies the type of dwelling involved in th...</td>
+      <td>Category</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>MSZoning</td>
+      <td>Identifies the general zoning classification o...</td>
+      <td>Category</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LotFrontage</td>
+      <td>Linear feet of street connected to property</td>
+      <td>Numerical</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>LotArea</td>
+      <td>Lot size in square feet</td>
+      <td>Numerical</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Street</td>
+      <td>Type of road access to property</td>
+      <td>Category</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>77</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(path<span class="op">/</span><span class="ss">f'vars_desc.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cat_vars <span class="op">=</span> df[<span class="st">'Variable'</span>][df[<span class="st">'Variable_Type'</span>] <span class="op">==</span> <span class="st">'Category'</span>].values</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cat_vars, <span class="bu">len</span>(cat_vars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(array(['MSSubClass', 'MSZoning', 'Street', 'Alley', 'LotShape',
+        'LandContour', 'Utilities', 'LotConfig', 'LandSlope',
+        'Neighborhood', 'Condition1', 'Condition2', 'BldgType',
+        'HouseStyle', 'OverallQual', 'OverallCond', 'RoofStyle',
+        'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType',
+        'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond',
+        'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'Heating',
+        'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',
+        'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish',
+        'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence',
+        'MiscFeature', 'SaleType', 'SaleCondition'], dtype=object),
+ 46)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cat_cols, <span class="bu">len</span>(cat_cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(Index(['MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities',
+        'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2',
+        'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st',
+        'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation',
+        'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2',
+        'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',
+        'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual',
+        'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature',
+        'SaleType', 'SaleCondition'],
+       dtype='object'),
+ 43)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>[i <span class="cf">for</span> i <span class="kw">in</span> cat_cols <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> cat_vars]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>[i <span class="cf">for</span> i <span class="kw">in</span> cat_vars <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> cat_cols]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>['MSSubClass', 'OverallQual', 'OverallCond']</code></pre>
+</div>
+</div>
+<p>After comparing the results of data types from the original train set and text file, we get the category variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>cat_vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['MSSubClass', 'MSZoning', 'Street', 'Alley', 'LotShape',
+       'LandContour', 'Utilities', 'LotConfig', 'LandSlope',
+       'Neighborhood', 'Condition1', 'Condition2', 'BldgType',
+       'HouseStyle', 'OverallQual', 'OverallCond', 'RoofStyle',
+       'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType',
+       'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond',
+       'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'Heating',
+       'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual',
+       'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish',
+       'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence',
+       'MiscFeature', 'SaleType', 'SaleCondition'], dtype=object)</code></pre>
+</div>
+</div>
+</section>
+<section id="define-a-function-to-extract-all-the-information-about-each-category-variables-codes." class="level3">
+<h3 class="anchored" data-anchor-id="define-a-function-to-extract-all-the-information-about-each-category-variables-codes.">Define a function to extract all the information about each category variable’s codes.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cat_desc(txt, col_name):</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> {}</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find the column name match the category variable</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(txt)):</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        rt1 <span class="op">=</span> re.match(col_name, txt[i])</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> rt1:</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             print(rt1.group(0), i) # debugging</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>            j <span class="op">=</span> i<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract the info about the the corresponding category variable</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> txt[j:]:</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t.startswith(<span class="st">' '</span>): <span class="co"># check if the text start with white space</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># find two parts (the code and code description) using regex</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the code might be 'NA' , digits or any word characters</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>            rt2 <span class="op">=</span> re.findall(<span class="vs">r'\s+(\d+\.\d+\w+|NA\s+|\w+\&amp;?\w*?\s*?)\t(.*)'</span>, t, flags<span class="op">=</span>re.IGNORECASE) </span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>            d[rt2[<span class="dv">0</span>][<span class="dv">0</span>].strip()] <span class="op">=</span> (rt2[<span class="dv">0</span>][<span class="dv">1</span>]).strip()</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return a dataframe of the category variable</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(d.items(), columns<span class="op">=</span>[col_name, col_name <span class="op">+</span> <span class="st">'_Description'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Test the function with category variable <code>MSSubClass</code> and <code>SaleCondition</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>col_name <span class="op">=</span> <span class="st">'MSSubClass'</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cat_desc(desc, col_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>MSSubClass</th>
+      <th>MSSubClass_Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20</td>
+      <td>1-STORY 1946 &amp; NEWER ALL STYLES</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>1-STORY 1945 &amp; OLDER</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>40</td>
+      <td>1-STORY W/FINISHED ATTIC ALL AGES</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>45</td>
+      <td>1-1/2 STORY - UNFINISHED ALL AGES</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50</td>
+      <td>1-1/2 STORY FINISHED ALL AGES</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>60</td>
+      <td>2-STORY 1946 &amp; NEWER</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>70</td>
+      <td>2-STORY 1945 &amp; OLDER</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>75</td>
+      <td>2-1/2 STORY ALL AGES</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>80</td>
+      <td>SPLIT OR MULTI-LEVEL</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>85</td>
+      <td>SPLIT FOYER</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>90</td>
+      <td>DUPLEX - ALL STYLES AND AGES</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>120</td>
+      <td>1-STORY PUD (Planned Unit Development) - 1946 ...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>150</td>
+      <td>1-1/2 STORY PUD - ALL AGES</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>160</td>
+      <td>2-STORY PUD - 1946 &amp; NEWER</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>180</td>
+      <td>PUD - MULTILEVEL - INCL SPLIT LEV/FOYER</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>190</td>
+      <td>2 FAMILY CONVERSION - ALL STYLES AND AGES</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>col_name <span class="op">=</span> <span class="st">'SaleCondition'</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>cat_desc(desc, col_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>SaleCondition</th>
+      <th>SaleCondition_Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Normal</td>
+      <td>Normal Sale</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Abnorml</td>
+      <td>Abnormal Sale -  trade, foreclosure, short sale</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AdjLand</td>
+      <td>Adjoining Land Purchase</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alloca</td>
+      <td>Allocation - two linked properties with separa...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Family</td>
+      <td>Sale between family members</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Partial</td>
+      <td>Home was not completed when last assessed (ass...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="create-pandas-dataframe-and-save-them-as-csv-files." class="level3">
+<h3 class="anchored" data-anchor-id="create-pandas-dataframe-and-save-them-as-csv-files.">Create pandas dataframe and save them as <code>csv</code> files.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat_var <span class="kw">in</span> cat_vars:</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    cat_df <span class="op">=</span> cat_desc(desc, cat_var)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    cat_df.to_csv(path<span class="op">/</span><span class="ss">f'</span><span class="sc">{</span>cat_var<span class="sc">}</span><span class="ss">.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls {path}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Alley.csv             Foundation.csv        MiscFeature.csv
+BldgType.csv          Functional.csv        Neighborhood.csv
+BsmtCond.csv          GarageCond.csv        OverallCond.csv
+BsmtExposure.csv      GarageFinish.csv      OverallQual.csv
+BsmtFinType1.csv      GarageQual.csv        PavedDrive.csv
+BsmtFinType2.csv      GarageType.csv        PoolQC.csv
+BsmtQual.csv          Heating.csv           RoofMatl.csv
+CentralAir.csv        HeatingQC.csv         RoofStyle.csv
+Condition1.csv        HouseStyle.csv        SaleCondition.csv
+Condition2.csv        KitchenQual.csv       SaleType.csv
+Electrical.csv        LandContour.csv       Street.csv
+ExterCond.csv         LandSlope.csv         Utilities.csv
+ExterQual.csv         LotConfig.csv         data_description.txt
+Exterior1st.csv       LotShape.csv          sample_submission.csv
+Exterior2nd.csv       MSSubClass.csv        test.csv
+Fence.csv             MSZoning.csv          train.csv
+FireplaceQu.csv       MasVnrType.csv        vars_desc.csv</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
