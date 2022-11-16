@@ -1,0 +1,15 @@
+---
+title: Projects
+listing:
+  contents: nbs
+  sort: "date desc"
+  type: grid
+  grid-columns: 3
+  # categories: true
+  fields: [image, title, description, categories]
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+---
+
+My projects

@@ -1,0 +1,7 @@
+# Options applied to all files in this folder
+
+author: Youfeng Zhou
+title-block-banner: false
+toc: true
+execute: 
+  freeze: true

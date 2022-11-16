@@ -1,0 +1,29 @@
+---
+toc: false
+listing:
+  - id: Projects
+    contents: projects/nbs
+    type: grid
+    max-items: 3
+    grid-columns: 3
+    fields: [image, title, description, categories]
+    sort: "date desc"
+  - id: posts
+    contents: posts/nbs
+    type: grid
+    max-items: 6
+    grid-columns: 3
+    fields: [image, title, description, date]
+    sort: "date desc"  
+page-layout: full
+---
+
+# My latest projects
+
+:::{#Projects}
+:::
+
+# My latest posts
+
+:::{#posts}
+:::

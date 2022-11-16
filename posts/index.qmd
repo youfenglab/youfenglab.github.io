@@ -1,0 +1,14 @@
+---
+title: Posts
+listing:
+  contents: nbs
+  sort: "date desc"
+  type: default
+  categories: true
+  fields: [date, title, description, image, categories]
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+---
+
+My posts

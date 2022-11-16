@@ -1,0 +1,15 @@
+# Quarto
+/.quarto/
+/_site/
+
+# osx generated files
+.DS_Store
+.DS_Store?
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea
+
+# Jupyter Notebook
+.ipynb_checkpoints
+

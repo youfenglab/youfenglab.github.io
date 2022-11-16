@@ -1,0 +1,6 @@
+# Options applied to all files in this folder
+
+title-block-banner: false
+toc: true
+execute: 
+  freeze: true

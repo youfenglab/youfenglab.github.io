@@ -1,0 +1,14 @@
+---
+title: TILs
+listing:
+  contents: nbs
+  sort: "date desc"
+  type: table
+  categories: true
+  fields: [date, title]
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+---
+
+Today I learned
