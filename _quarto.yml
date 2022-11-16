@@ -8,7 +8,7 @@ website:
   title: "Youfeng Zhou"
   twitter-card: true
   open-graph: true
-  favicon: favicon.ico
+  favicon: images/favicon.ico
   navbar:
     background: primary
     search: true
