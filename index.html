@@ -99,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-title','listing-description','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
@@ -192,10 +192,10 @@ ul.task-list li input[type="checkbox"] {
 <h1>My latest projects</h1>
 <div id="listing-Projects" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="data cleaning,regex" data-listing-date-sort="1666483200000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="1.26">
+<div class="g-col-1" data-index="0" data-categories="data cleaning,regex" data-listing-date-sort="1666483200000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="1.26">
 <a href="./projects/nbs/extract_dataframe_from_txt_file.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
+<div class="card-img-bg" style="height: 330px;">
 &nbsp;
 </div>
 <div class="card-body post-contents">
@@ -217,11 +217,11 @@ This notebook shows matching text pattern and extract text and processing string
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="deep learning,nlp" data-listing-date-sort="1663891200000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.165">
+<div class="g-col-1" data-index="1" data-categories="deep learning,nlp" data-listing-date-sort="1663891200000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.165">
 <a href="./projects/nbs/generate_names.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./projects/nbs/images/englishname.jpeg" class="thumbnail-image card-img" style="height: 150px;">
+<img src="./projects/nbs/images/englishname.jpeg" class="thumbnail-image card-img" style="height: 330px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -242,10 +242,10 @@ Train a language model to generate english names
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.005">
+<div class="g-col-1" data-index="2" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.005">
 <a href="./projects/nbs/house_price_prediction.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
+<div class="card-img-bg" style="height: 330px;">
 &nbsp;
 </div>
 <div class="card-body post-contents">
@@ -274,7 +274,7 @@ No matching items
 <h1>My latest posts</h1>
 <div id="listing-posts" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="deep learning,math" data-listing-date-sort="1667520000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.27">
+<div class="g-col-1" data-index="0" data-categories="deep learning,math" data-listing-date-sort="1667520000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.27">
 <a href="./posts/nbs/activation_functions.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-img-bg" style="height: 150px;">
@@ -284,6 +284,14 @@ No matching items
 <h5 class="no-anchor card-title listing-title" data-anchor-id="my-latest-posts">
 The common activation functions
 </h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('math'); return false;">
+math
+</div>
+</div>
 <div class="card-text listing-description">
 Basic math for deep learning
 </div>
@@ -296,7 +304,7 @@ Nov 4, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="python,pandas,numpy" data-listing-date-sort="1667088000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.215">
+<div class="g-col-1" data-index="1" data-categories="python,pandas,numpy" data-listing-date-sort="1667088000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.215">
 <a href="./posts/nbs/handle_missing_data.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-img-bg" style="height: 150px;">
@@ -306,6 +314,17 @@ Nov 4, 2022
 <h5 class="no-anchor card-title listing-title">
 Handling missing data
 </h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
+pandas
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('numpy'); return false;">
+numpy
+</div>
+</div>
 <div class="card-text listing-description">
 Examples of dealing with missing data
 </div>
@@ -318,7 +337,7 @@ Oct 30, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="mysql,database,pandas" data-listing-date-sort="1663545600000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.095">
+<div class="g-col-1" data-index="2" data-categories="mysql,database,pandas" data-listing-date-sort="1663545600000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.095">
 <a href="./posts/nbs/connect_db.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -328,6 +347,17 @@ Oct 30, 2022
 <h5 class="no-anchor card-title listing-title">
 Connect to MySql with Pandas
 </h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('mysql'); return false;">
+mysql
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('database'); return false;">
+database
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('pandas'); return false;">
+pandas
+</div>
+</div>
 <div class="card-text listing-description">
 This blog show how to connect to MySql database via Pandas
 </div>
@@ -340,7 +370,7 @@ Sep 19, 2022
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="nlp,huggingface" data-listing-date-sort="1660867200000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.665">
+<div class="g-col-1" data-index="3" data-categories="nlp,huggingface" data-listing-date-sort="1660867200000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.665">
 <a href="./posts/nbs/hf_datasets.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <div class="card-img-bg" style="height: 150px;">
@@ -350,6 +380,14 @@ Sep 19, 2022
 <h5 class="no-anchor card-title listing-title">
 Understanding Huggingface datasets
 </h5>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('nlp'); return false;">
+nlp
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('huggingface'); return false;">
+huggingface
+</div>
+</div>
 <div class="card-text listing-description">
 This blog will dive into huggingface datasets
 </div>

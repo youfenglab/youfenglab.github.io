@@ -71,9 +71,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-image','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-description','listing-categories','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -156,11 +156,11 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    </div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="data cleaning">data cleaning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="data visualization">data visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="exploratory data analysis">exploratory data analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="machine learning">machine learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="nlp">nlp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="regex">regex <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -185,13 +185,10 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="data cleaning,regex" data-listing-date-sort="1666483200000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="1.26">
+<div class="list grid quarto-listing-cols-1">
+<div class="g-col-1" data-index="0" data-categories="data cleaning,regex" data-listing-date-sort="1666483200000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="1.26">
 <a href="../projects/nbs/extract_dataframe_from_txt_file.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
-&nbsp;
-</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Extracting and grouping text info by category
@@ -207,16 +204,18 @@ regex
 <div class="card-text listing-description">
 This notebook shows matching text pattern and extract text and processing strings using Regex.
 </div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 23, 2022
+</div>
+</div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="deep learning,nlp" data-listing-date-sort="1663891200000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.165">
+<div class="g-col-1" data-index="1" data-categories="deep learning,nlp" data-listing-date-sort="1663891200000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.165">
 <a href="../projects/nbs/generate_names.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="../projects/nbs/images/englishname.jpeg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Generate English name
@@ -232,16 +231,18 @@ nlp
 <div class="card-text listing-description">
 Train a language model to generate english names
 </div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Sep 23, 2022
+</div>
+</div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.005">
+<div class="g-col-1" data-index="2" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.005">
 <a href="../projects/nbs/house_price_prediction.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
-&nbsp;
-</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 House Price Prediction
@@ -254,16 +255,18 @@ machine learning
 <div class="card-text listing-description">
 This notebook will
 </div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+May 23, 2022
+</div>
+</div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="exploratory data analysis" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.005">
+<div class="g-col-1" data-index="3" data-categories="exploratory data analysis" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.005">
 <a href="../projects/nbs/word_clouds.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
-&nbsp;
-</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Words Clouds
@@ -276,16 +279,18 @@ exploratory data analysis
 <div class="card-text listing-description">
 This notebook will show how to create word clouds in python
 </div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+May 23, 2022
+</div>
+</div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="data visualization" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.005">
+<div class="g-col-1" data-index="4" data-categories="data visualization" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.005">
 <a href="../projects/nbs/powerbi.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
-&nbsp;
-</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Power BI
@@ -298,16 +303,18 @@ data visualization
 <div class="card-text listing-description">
 This notebook will show how to use Power BI
 </div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+May 23, 2022
+</div>
+</div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668600580941" data-listing-reading-time-sort="0.03">
+<div class="g-col-1" data-index="5" data-categories="machine learning" data-listing-date-sort="1653264000000" data-listing-file-modified-sort="1668609103615" data-listing-reading-time-sort="0.03">
 <a href="../projects/nbs/eigenface.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="card-img-bg" style="height: 150px;">
-&nbsp;
-</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 EigenFace
@@ -319,6 +326,11 @@ machine learning
 </div>
 <div class="card-text listing-description">
 This notebook will
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+May 23, 2022
+</div>
 </div>
 </div>
 </div>
