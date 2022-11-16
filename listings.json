@@ -9,25 +9,14 @@
     ]
   },
   {
-    "listing": "/projects/index.html",
-    "items": [
-      "/projects/nbs/extract_dataframe_from_txt_file.html",
-      "/projects/nbs/generate_names.html",
-      "/projects/nbs/eigenface.html",
-      "/projects/nbs/powerbi.html",
-      "/projects/nbs/house_price_prediction.html",
-      "/projects/nbs/word_clouds.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/projects/nbs/extract_dataframe_from_txt_file.html",
       "/projects/nbs/generate_names.html",
-      "/projects/nbs/eigenface.html",
-      "/projects/nbs/powerbi.html",
       "/projects/nbs/house_price_prediction.html",
       "/projects/nbs/word_clouds.html",
+      "/projects/nbs/powerbi.html",
+      "/projects/nbs/eigenface.html",
       "/posts/nbs/activation_functions.html",
       "/posts/nbs/handle_missing_data.html",
       "/posts/nbs/connect_db.html",
@@ -39,6 +28,17 @@
     "items": [
       "/tils/nbs/linux.html",
       "/tils/nbs/vision_augmentation.html"
+    ]
+  },
+  {
+    "listing": "/projects/index.html",
+    "items": [
+      "/projects/nbs/extract_dataframe_from_txt_file.html",
+      "/projects/nbs/generate_names.html",
+      "/projects/nbs/house_price_prediction.html",
+      "/projects/nbs/word_clouds.html",
+      "/projects/nbs/powerbi.html",
+      "/projects/nbs/eigenface.html"
     ]
   }
 ]
