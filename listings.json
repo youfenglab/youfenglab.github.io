@@ -26,8 +26,10 @@
   {
     "listing": "/tils/index.html",
     "items": [
-      "/tils/nbs/linux.html",
-      "/tils/nbs/vision_augmentation.html"
+      "/tils/nbs/define-a-spark-schema.html",
+      "/tils/nbs/find-path-of-a-linux-command.html",
+      "/tils/nbs/setup-spark-in-jupyter-notebook.html",
+      "/tils/nbs/image-data-augmentation.html"
     ]
   },
   {

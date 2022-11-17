@@ -39,28 +39,42 @@
     "href": "index.html",
     "title": "My latest projects",
     "section": "",
-    "text": "My latest projects\n\n\n\n\n\n\n \n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\n\n\n\n\n\n\n \n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\n\n\n\n\nNo matching items\n\n\n\n\nMy latest posts\n\n\n\n\n\n\n \n\n\n\nThe common activation functions\n\n\n\ndeep learning\n\n\nmath\n\n\n\nBasic math for deep learning\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nHandling missing data\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\nExamples of dealing with missing data\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nConnect to MySql with Pandas\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nUnderstanding Huggingface datasets\n\n\n\nnlp\n\n\nhuggingface\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\nAug 19, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "My latest projects\n\n\n\n\n\n\n \n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "tils/index.html",
     "href": "tils/index.html",
     "title": "TILs",
     "section": "",
-    "text": "Today I learned\n\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\nNov 15, 2022\n\n\nFinding the path of a command\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
+    "text": "Today I learned\n\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "tils/nbs/linux.html",
-    "href": "tils/nbs/linux.html",
-    "title": "Finding the path of a command",
-    "section": "",
-    "text": "In MacOS terminal\nSuppose we want to find the path of the command spark-submit, we can simpliy type\ntype -a spark-submit in the terminal command line.\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit"
-  },
-  {
-    "objectID": "tils/nbs/vision_augmentation.html",
-    "href": "tils/nbs/vision_augmentation.html",
+    "objectID": "tils/nbs/image-data-augmentation.html",
+    "href": "tils/nbs/image-data-augmentation.html",
     "title": "Image data augmentation",
     "section": "",
-    "text": "Load an original image\n\nimg = Image.open('images/cat.jpeg')\nimg\n\n\n\n\n\n\nConvert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\n\n\nResize the image to 224 by 224\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs\n\n\n\n\n\n\nFlip an image\nFlip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\nFlip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\nChange brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)\n\n\n\n\n\n\nTurn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)\n\n\n\n\n\n\nCrop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
+    "text": "This notebook will show the common methods used for preparing image data for vision models in PyTorch.\n\nLoad an original image\n\nimg = Image.open('images/cat.jpeg')\nimg\n\n\n\n\n\n\nConvert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\nFrom above, we know that the image size is 1199 * 1200.\n\n\nResize the image to 224 by 224\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs\n\n\n\n\n\n\nFlip an image\nFlip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\nFlip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\nChange brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)\n\n\n\n\n\n\nTurn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)\n\n\n\n\n\n\nCrop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
+  },
+  {
+    "objectID": "tils/nbs/define-a-spark-schema.html",
+    "href": "tils/nbs/define-a-spark-schema.html",
+    "title": "Define a spark schema",
+    "section": "",
+    "text": "Setup\n\nfrom pyspark.sql.types import *\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('Simple-table').getOrCreate()\n\n\n\nDefine it programmatically\n\nschema = StructType([StructField(\"first name\", StringType(), False), \n                     StructField(\"last name\", StringType(), False), \n                     StructField(\"weight\", IntegerType(), False)])\n\n\nschema\n\nStructType([StructField('first name', StringType(), False), StructField('last name', StringType(), False), StructField('weight', IntegerType(), False)])\n\n\nFalse indicate whether the field can be null (None) or not.\n\ndata = [['Jake', 'Z', 60], ['Tom', 'X', 50]]\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first name|last name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\nDefine it using DDL\nThis method is much simper.\n\nschema = \"first_name STRING, last_name STRING, weight INT\"\n\n\nschema\n\n'first_name STRING, last_name STRING, weight INT'\n\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first_name|last_name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nA disadvantage of this method is we cannot put space or - between words.\n\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html",
+    "href": "tils/nbs/find-path-of-a-linux-command.html",
+    "title": "Find the path of a Linux command",
+    "section": "",
+    "text": "Suppose we want to find the path of the command spark-submit in terminal, we can do it in 4 ways.\n\nwhich command\n\n!which spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\nWith a parameter -a will print all matching paths. In this case, there is only one.\n\n!which -a spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\ncommand command\n\n!command -v spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n!command -V spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWe must pass the parameter -v or -V, otherwise, it will run the command.\n\n\n\n\ntype command\nShow the path\n\n!type -p spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition\n\n!type spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition, excutable type, and path\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\nwhereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
+  },
+  {
+    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "title": "Set up spark in Jupyter Notebook",
+    "section": "",
+    "text": "Low level API\n\nfrom pyspark import SparkContext, SparkConf\n\n\nconf = SparkConf().setMaster('local')\nsc = SparkContext(conf=conf)\n\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n\n\n22/11/17 11:17:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n\n\n\nsc.stop()\n\n\n\nHigh level API\n\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('chapter2').getOrCreate()\n\n\nspark.stop()"
   },
   {
     "objectID": "projects/index.html",
