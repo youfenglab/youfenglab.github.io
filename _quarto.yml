@@ -13,6 +13,8 @@ website:
     background: primary
     search: true
     left:
+      - text: Home
+        file: index.qmd
       - text: About
         file: about.qmd  
       - text: Projects
@@ -29,7 +31,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      - journal
+      - custom.scss
     css: styles.css
     toc: true
     
