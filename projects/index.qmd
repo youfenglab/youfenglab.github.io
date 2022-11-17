@@ -13,4 +13,3 @@ listing:
 page-layout: full
 ---
 
-My projects

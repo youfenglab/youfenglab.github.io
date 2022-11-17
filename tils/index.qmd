@@ -11,4 +11,3 @@ listing:
 page-layout: full
 ---
 
-Today I learned
