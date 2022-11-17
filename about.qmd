@@ -13,9 +13,9 @@ about:
 page-layout: full
 ---
 
-Hi, 👋 I am Youfeng.
+Hi, 👋 I am Youfeng,
 
-I am a data analysis and data science learner. 
+a data analysis and data science learner. 
 
 I'm here to share my study,
 
