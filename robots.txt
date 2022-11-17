@@ -1,1 +1,1 @@
-Sitemap: https://github.com/youfenglab/youfenglab.github.io/sitemap.xml
+Sitemap: https://youfenglab.github.io/sitemap.xml
