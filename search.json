@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Posts",
+    "section": "",
+    "text": "The common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/nbs/activation_functions.html",
+    "href": "posts/nbs/activation_functions.html",
+    "title": "The common activation functions",
+    "section": "",
+    "text": "Why we need activation functions?\nActivation functions decide whether a neuron should be activated or not. They are differentiable, then the information can be carried between the inputs and outputs. In practice, most of the actication functions are non-linearity.\n\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport torch\n\n\n\nReLU function\n\\[ReLU(x) = max(x,0)\\]\n\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.relu(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nx.shape, x.grad.shape, y.shape\n\n(torch.Size([200]), torch.Size([200]), torch.Size([200]))\n\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('ReLU')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of ReLU')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\nSigmoid function\n\\[sigmoid(x) = \\frac{1} {1 + e^{-x}}\\]\n\nx.data.zero_()\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.sigmoid(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('Sigmoid')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of Sigmoid')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\nTanh function\n\\[tanh(x) = \\frac{1 - e^{-2x}} {1 + e^{-2x}}\\]\n\nx.data.zero_()\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.tanh(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('Tanh')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of Tanh')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "posts/nbs/handle_missing_data.html",
+    "href": "posts/nbs/handle_missing_data.html",
+    "title": "Handling missing data",
+    "section": "",
+    "text": "In Pandas, there are 4 methods to handle NA values, which are dropna, fillna, isnull, notnull.\n\n\n\n\nflowchart LR\n  A([Handling NA]) --> B(dropna)\n  A --> C(fillna)\n  A --> D(isnull)\n  A --> E(notnull)\n  C --> F[ffill]\n  C --> G[bfill]\n\n\n\n\n\n\n\n\n\nimport pandas as pd\nimport numpy as np\n\n\nstring_data = pd.Series(['apple', 'orange', np.nan, 'avocado'])\nstring_data\n\n0      apple\n1     orange\n2        NaN\n3    avocado\ndtype: object\n\n\n\nstring_data.isna()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.isnull()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data[0] = None\n\n\nstring_data.isnull()\n\n0     True\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.notnull()\n\n0    False\n1     True\n2    False\n3     True\ndtype: bool"
+  },
+  {
     "objectID": "posts/nbs/hf_datasets.html",
     "href": "posts/nbs/hf_datasets.html",
     "title": "Understanding Huggingface datasets",
@@ -14,32 +35,60 @@
     "text": "Import packages\n\nimport sqlalchemy as sqla\nimport pandas as pd\n\n\n\nConnect to a database\n\ndb = sqla.create_engine('mysql+mysqlconnector://root:@localhost:3306/farmers_market')\n\nGet all the tables in the database\n\ndb_tables = pd.read_sql('show tables from farmers_market', db)\ndb_tables\n\n\n\n\n\n  \n    \n      \n      Tables_in_farmers_market\n    \n  \n  \n    \n      0\n      booth\n    \n    \n      1\n      customer\n    \n    \n      2\n      customer_purchases\n    \n    \n      3\n      market_date_info\n    \n    \n      4\n      product\n    \n    \n      5\n      product_category\n    \n    \n      6\n      vendor\n    \n    \n      7\n      vendor_booth_assignments\n    \n    \n      8\n      vendor_inventory\n    \n    \n      9\n      zip_data\n    \n  \n\n\n\n\n\n\nGet information about the schema of each table\n\ntables = db_tables['Tables_in_farmers_market']\n\nfor table in tables:\n    desc = pd.read_sql('describe {}'.format(table), db)\n    print('*'*30, table, '*'*30)\n    print(desc, '\\n')\n\n****************************** booth ******************************\n               Field          Type Null  Key Default Extra\n0       booth_number       int(11)   NO  PRI    None      \n1  booth_price_level   varchar(45)   NO         None      \n2  booth_description  varchar(255)   NO         None      \n3         booth_type   varchar(45)   NO         None       \n\n****************************** customer ******************************\n                 Field         Type Null  Key Default Extra\n0          customer_id      int(11)   NO  PRI    None      \n1  customer_first_name  varchar(45)  YES         None      \n2   customer_last_name  varchar(45)  YES         None      \n3         customer_zip  varchar(45)  YES         None       \n\n****************************** customer_purchases ******************************\n                      Field           Type Null  Key Default Extra\n0                product_id        int(11)   NO  PRI    None      \n1                 vendor_id        int(11)   NO  PRI    None      \n2               market_date           date   NO  PRI    None      \n3               customer_id        int(11)   NO  PRI    None      \n4                  quantity  decimal(16,2)  YES         None      \n5  cost_to_customer_per_qty  decimal(16,2)  YES         None      \n6          transaction_time           time   NO  PRI    None       \n\n****************************** market_date_info ******************************\n                Field          Type Null  Key Default Extra\n0         market_date          date   NO  PRI    None      \n1          market_day   varchar(45)  YES         None      \n2         market_week   varchar(45)  YES         None      \n3         market_year   varchar(45)  YES         None      \n4   market_start_time   varchar(45)  YES         None      \n5     market_end_time   varchar(45)  YES         None      \n6       special_notes          blob  YES         None      \n7       market_season   varchar(45)  YES         None      \n8     market_min_temp  varchar(200)  YES         None      \n9     market_max_temp   varchar(45)  YES         None      \n10   market_rain_flag       int(11)  YES         None      \n11   market_snow_flag       int(11)  YES         None       \n\n****************************** product ******************************\n                 Field         Type Null  Key Default Extra\n0           product_id      int(11)   NO  PRI    None      \n1         product_name  varchar(45)  YES         None      \n2         product_size  varchar(45)  YES         None      \n3  product_category_id      int(11)   NO  PRI    None      \n4     product_qty_type  varchar(45)  YES         None       \n\n****************************** product_category ******************************\n                   Field         Type Null  Key Default           Extra\n0    product_category_id      int(11)   NO  PRI    None  auto_increment\n1  product_category_name  varchar(45)  YES         None                 \n\n****************************** vendor ******************************\n                     Field         Type Null  Key Default           Extra\n0                vendor_id      int(11)   NO  PRI    None  auto_increment\n1              vendor_name  varchar(45)   NO  UNI    None                \n2              vendor_type  varchar(45)   NO         None                \n3  vendor_owner_first_name  varchar(45)   NO         None                \n4   vendor_owner_last_name  varchar(45)   NO         None                 \n\n****************************** vendor_booth_assignments ******************************\n          Field     Type Null  Key Default Extra\n0     vendor_id  int(11)   NO  PRI    None      \n1  booth_number  int(11)   NO  PRI    None      \n2   market_date     date   NO  PRI    None       \n\n****************************** vendor_inventory ******************************\n            Field           Type Null  Key Default Extra\n0     market_date           date   NO  PRI    None      \n1        quantity  decimal(16,2)  YES         None      \n2       vendor_id        int(11)   NO  PRI    None      \n3      product_id        int(11)   NO  PRI    None      \n4  original_price  decimal(16,2)  YES         None       \n\n****************************** zip_data ******************************\n                     Field     Type Null  Key Default Extra\n0               zip_code_5  char(5)   NO  PRI    None      \n1  median_household_income    float  YES         None      \n2      percent_high_income    float  YES         None      \n3         percent_under_18    float  YES         None      \n4          percent_over_65    float  YES         None      \n5       people_per_sq_mile    float  YES         None      \n6                 latitude    float  YES         None      \n7                longitude    float  YES         None       \n\n\n\n\nproduct = pd.read_sql('select * from product', db)\nproduct.info()\n\n<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 23 entries, 0 to 22\nData columns (total 5 columns):\n #   Column               Non-Null Count  Dtype \n---  ------               --------------  ----- \n 0   product_id           23 non-null     int64 \n 1   product_name         23 non-null     object\n 2   product_size         22 non-null     object\n 3   product_category_id  23 non-null     int64 \n 4   product_qty_type     21 non-null     object\ndtypes: int64(2), object(3)\nmemory usage: 1.0+ KB\n\n\n\npd.read_sql('select product_id from product limit 5', db)\n\n\n\n\n\n  \n    \n      \n      product_id\n    \n  \n  \n    \n      0\n      1\n    \n    \n      1\n      2\n    \n    \n      2\n      3\n    \n    \n      3\n      9\n    \n    \n      4\n      12"
   },
   {
-    "objectID": "posts/nbs/handle_missing_data.html",
-    "href": "posts/nbs/handle_missing_data.html",
-    "title": "Handling missing data",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My latest projects",
     "section": "",
-    "text": "In Pandas, there are 4 methods to handle NA values, which are dropna, fillna, isnull, notnull.\n\n\n\n\nflowchart LR\n  A([Handling NA]) --> B(dropna)\n  A --> C(fillna)\n  A --> D(isnull)\n  A --> E(notnull)\n  C --> F[ffill]\n  C --> G[bfill]\n\n\n\n\n\n\n\n\n\nimport pandas as pd\nimport numpy as np\n\n\nstring_data = pd.Series(['apple', 'orange', np.nan, 'avocado'])\nstring_data\n\n0      apple\n1     orange\n2        NaN\n3    avocado\ndtype: object\n\n\n\nstring_data.isna()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.isnull()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data[0] = None\n\n\nstring_data.isnull()\n\n0     True\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.notnull()\n\n0    False\n1     True\n2    False\n3     True\ndtype: bool"
+    "text": "My latest projects\n\n\n\n\n\n\n \n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/nbs/activation_functions.html",
-    "href": "posts/nbs/activation_functions.html",
-    "title": "The common activation functions",
+    "objectID": "tils/index.html",
+    "href": "tils/index.html",
+    "title": "TILs",
     "section": "",
-    "text": "Why we need activation functions?\nActivation functions decide whether a neuron should be activated or not. They are differentiable, then the information can be carried between the inputs and outputs. In practice, most of the actication functions are non-linearity.\n\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport torch\n\n\n\nReLU function\n\\[ReLU(x) = max(x,0)\\]\n\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.relu(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nx.shape, x.grad.shape, y.shape\n\n(torch.Size([200]), torch.Size([200]), torch.Size([200]))\n\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('ReLU')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of ReLU')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\nSigmoid function\n\\[sigmoid(x) = \\frac{1} {1 + e^{-x}}\\]\n\nx.data.zero_()\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.sigmoid(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('Sigmoid')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of Sigmoid')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\nTanh function\n\\[tanh(x) = \\frac{1 - e^{-2x}} {1 + e^{-2x}}\\]\n\nx.data.zero_()\nx = torch.arange(-10.0, 10, 0.1, requires_grad=True)\ny = torch.tanh(x)\ny.backward(torch.ones_like(x), retain_graph=True)\n\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 3))\nflat_axs = axs.flatten()\n\nflat_axs[0].plot(x.detach(), y.detach())\nflat_axs[0].set_title('Tanh')\nflat_axs[0].set_xlabel('x')\nflat_axs[0].set_ylabel('y')\n\nflat_axs[1].plot(x.detach(), x.grad)\nflat_axs[1].set_title('grad of Tanh')\nflat_axs[1].set_xlabel('x')\nflat_axs[1].set_ylabel('grad of y')\n\nplt.tight_layout()\nplt.show()"
+    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/index.html",
-    "href": "posts/index.html",
-    "title": "Posts",
+    "objectID": "tils/nbs/image-data-augmentation.html",
+    "href": "tils/nbs/image-data-augmentation.html",
+    "title": "Image data augmentation",
     "section": "",
-    "text": "My posts\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "This notebook will show the common methods used for preparing image data for vision models in PyTorch.\n\nLoad an original image\n\nimg = Image.open('images/cat.jpeg')\nimg\n\n\n\n\n\n\nConvert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\nFrom above, we know that the image size is 1199 * 1200.\n\n\nResize the image to 224 by 224\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs\n\n\n\n\n\n\nFlip an image\nFlip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\nFlip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\nChange brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)\n\n\n\n\n\n\nTurn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)\n\n\n\n\n\n\nCrop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
   },
   {
-    "objectID": "projects/nbs/eigenface.html",
-    "href": "projects/nbs/eigenface.html",
-    "title": "EigenFace",
+    "objectID": "tils/nbs/define-a-spark-schema.html",
+    "href": "tils/nbs/define-a-spark-schema.html",
+    "title": "Define a spark schema",
     "section": "",
-    "text": "First\nload data\n\n\nSecond\nLook at the data"
+    "text": "Setup\n\nfrom pyspark.sql.types import *\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('Simple-table').getOrCreate()\n\n\n\nDefine it programmatically\n\nschema = StructType([StructField(\"first name\", StringType(), False), \n                     StructField(\"last name\", StringType(), False), \n                     StructField(\"weight\", IntegerType(), False)])\n\n\nschema\n\nStructType([StructField('first name', StringType(), False), StructField('last name', StringType(), False), StructField('weight', IntegerType(), False)])\n\n\nFalse indicate whether the field can be null (None) or not.\n\ndata = [['Jake', 'Z', 60], ['Tom', 'X', 50]]\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first name|last name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\nDefine it using DDL\nThis method is much simper.\n\nschema = \"first_name STRING, last_name STRING, weight INT\"\n\n\nschema\n\n'first_name STRING, last_name STRING, weight INT'\n\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first_name|last_name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nA disadvantage of this method is we cannot put space or - between words.\n\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html",
+    "href": "tils/nbs/find-path-of-a-linux-command.html",
+    "title": "Find the path of a Linux command",
+    "section": "",
+    "text": "Suppose we want to find the path of the command spark-submit in terminal, we can do it in 4 ways.\n\nwhich command\n\n!which spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\nWith a parameter -a will print all matching paths. In this case, there is only one.\n\n!which -a spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\ncommand command\n\n!command -v spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n!command -V spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWe must pass the parameter -v or -V, otherwise, it will run the command.\n\n\n\n\ntype command\nShow the path\n\n!type -p spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition\n\n!type spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition, excutable type, and path\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\nwhereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
+  },
+  {
+    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "title": "Set up spark in Jupyter Notebook",
+    "section": "",
+    "text": "Using the low-level RDD API\n\nfrom pyspark import SparkContext, SparkConf\n\n\nconf = SparkConf().setMaster('local')\nsc = SparkContext(conf=conf)\n\n\nsc.stop()\n\n\n\nUsing high-level DSL operators and the DataFrame API\n\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('chapter2').getOrCreate()\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects/nbs/house_price_prediction.html",
+    "href": "projects/nbs/house_price_prediction.html",
+    "title": "House Price Prediction",
+    "section": "",
+    "text": "from fastai.tabular.all import *"
   },
   {
     "objectID": "projects/nbs/extract_dataframe_from_txt_file.html",
@@ -56,25 +105,11 @@
     "text": "Project summary\nThis project train a language model to generate next character based on the previous characters to output an english name.\n\n\nTools used\nPython, PyTorch.\n\n\nRead more\n Project website    GitHub repo"
   },
   {
-    "objectID": "projects/nbs/house_price_prediction.html",
-    "href": "projects/nbs/house_price_prediction.html",
-    "title": "House Price Prediction",
+    "objectID": "projects/nbs/eigenface.html",
+    "href": "projects/nbs/eigenface.html",
+    "title": "EigenFace",
     "section": "",
-    "text": "from fastai.tabular.all import *"
-  },
-  {
-    "objectID": "projects/index.html",
-    "href": "projects/index.html",
-    "title": "Projects",
-    "section": "",
-    "text": "My projects\n\n\n\n\n\n\n\n\n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Youfeng Zhou",
-    "section": "",
-    "text": "My latest projects\n\n\n\n\n\n\n \n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "First\nload data\n\n\nSecond\nLook at the data"
   },
   {
     "objectID": "about.html",
@@ -82,40 +117,5 @@
     "title": "About",
     "section": "",
     "text": "Hi, I am Youfeng.\nWelcome to my personal website. I am sharing my study here."
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html",
-    "href": "tils/nbs/find-path-of-a-linux-command.html",
-    "title": "Find the path of a Linux command",
-    "section": "",
-    "text": "Suppose we want to find the path of the command spark-submit in terminal, we can do it in 4 ways.\n\nwhich command\n\n!which spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\nWith a parameter -a will print all matching paths. In this case, there is only one.\n\n!which -a spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\ncommand command\n\n!command -v spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n!command -V spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWe must pass the parameter -v or -V, otherwise, it will run the command.\n\n\n\n\ntype command\nShow the path\n\n!type -p spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition\n\n!type spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition, excutable type, and path\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\nwhereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
-  },
-  {
-    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
-    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html",
-    "title": "Set up spark in Jupyter Notebook",
-    "section": "",
-    "text": "Low level API\n\nfrom pyspark import SparkContext, SparkConf\n\n\nconf = SparkConf().setMaster('local')\nsc = SparkContext(conf=conf)\n\nSetting default log level to \"WARN\".\nTo adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).\n\n\n22/11/17 11:17:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable\n\n\n\nsc.stop()\n\n\n\nHigh level API\n\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('chapter2').getOrCreate()\n\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/define-a-spark-schema.html",
-    "href": "tils/nbs/define-a-spark-schema.html",
-    "title": "Define a spark schema",
-    "section": "",
-    "text": "Setup\n\nfrom pyspark.sql.types import *\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('Simple-table').getOrCreate()\n\n\n\nDefine it programmatically\n\nschema = StructType([StructField(\"first name\", StringType(), False), \n                     StructField(\"last name\", StringType(), False), \n                     StructField(\"weight\", IntegerType(), False)])\n\n\nschema\n\nStructType([StructField('first name', StringType(), False), StructField('last name', StringType(), False), StructField('weight', IntegerType(), False)])\n\n\nFalse indicate whether the field can be null (None) or not.\n\ndata = [['Jake', 'Z', 60], ['Tom', 'X', 50]]\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first name|last name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\nDefine it using DDL\nThis method is much simper.\n\nschema = \"first_name STRING, last_name STRING, weight INT\"\n\n\nschema\n\n'first_name STRING, last_name STRING, weight INT'\n\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first_name|last_name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nA disadvantage of this method is we cannot put space or - between words.\n\n\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html",
-    "href": "tils/nbs/image-data-augmentation.html",
-    "title": "Image data augmentation",
-    "section": "",
-    "text": "This notebook will show the common methods used for preparing image data for vision models in PyTorch.\n\nLoad an original image\n\nimg = Image.open('images/cat.jpeg')\nimg\n\n\n\n\n\n\nConvert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\nFrom above, we know that the image size is 1199 * 1200.\n\n\nResize the image to 224 by 224\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs\n\n\n\n\n\n\nFlip an image\nFlip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\nFlip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\nChange brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)\n\n\n\n\n\n\nTurn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)\n\n\n\n\n\n\nCrop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
-  },
-  {
-    "objectID": "tils/index.html",
-    "href": "tils/index.html",
-    "title": "TILs",
-    "section": "",
-    "text": "Today I learned\n\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
   }
 ]
