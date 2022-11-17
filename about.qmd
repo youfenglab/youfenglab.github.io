@@ -13,6 +13,14 @@ about:
 page-layout: full
 ---
 
-Hi, I am Youfeng.
+Hi, 👋 I am Youfeng.
 
-Welcome to my personal website. I am sharing my study here. 
+I am a data analysis and data science learner. 
+
+I'm here to share my study,
+
+and hope to connect with people from the data engineering and machine learning community.
+
+Please reach me on [Twitter](https://twitter.com/Joe_zhou14).
+
+Happy reading and see you around! 😃
