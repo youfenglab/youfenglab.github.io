@@ -128,10 +128,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Youfeng Zhou - Find the path of a Linux command">
-<meta property="og:description" content="Suppose we want to find the path of the command spark-submit in terminal, we can do it in 4 ways.">
+<meta property="og:description" content="Suppose we want to find the path of the command spark-submit in terminal, we have 4 ways to do it.">
 <meta property="og:site-name" content="Youfeng Zhou">
 <meta name="twitter:title" content="Youfeng Zhou - Find the path of a Linux command">
-<meta name="twitter:description" content="Suppose we want to find the path of the command spark-submit in terminal, we can do it in 4 ways.">
+<meta name="twitter:description" content="Suppose we want to find the path of the command spark-submit in terminal, we have 4 ways to do it.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -198,10 +198,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#which-command" id="toc-which-command" class="nav-link active" data-scroll-target="#which-command"><code>which</code> command</a></li>
-  <li><a href="#command-command" id="toc-command-command" class="nav-link" data-scroll-target="#command-command"><code>command</code> command</a></li>
-  <li><a href="#type-command" id="toc-type-command" class="nav-link" data-scroll-target="#type-command"><code>type</code> command</a></li>
-  <li><a href="#whereis-command" id="toc-whereis-command" class="nav-link" data-scroll-target="#whereis-command"><code>whereis</code> command</a></li>
+  <li><a href="#which-command" id="toc-which-command" class="nav-link active" data-scroll-target="#which-command">1. <code>which</code> command</a></li>
+  <li><a href="#command-command" id="toc-command-command" class="nav-link" data-scroll-target="#command-command">2. <code>command</code> command</a></li>
+  <li><a href="#type-command" id="toc-type-command" class="nav-link" data-scroll-target="#type-command">3. <code>type</code> command</a></li>
+  <li><a href="#whereis-command" id="toc-whereis-command" class="nav-link" data-scroll-target="#whereis-command">4. <code>whereis</code> command</a></li>
   </ul>
 </nav>
     </div>
@@ -240,9 +240,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Suppose we want to find the <code>path</code> of the command <code>spark-submit</code> in terminal, we can do it in 4 ways.</p>
-<section id="which-command" class="level3">
-<h3 class="anchored" data-anchor-id="which-command"><code>which</code> command</h3>
+<p>Suppose we want to find the <code>path</code> of the command <code>spark-submit</code> in terminal, we have 4 ways to do it.</p>
+<section id="which-command" class="level2">
+<h2 class="anchored" data-anchor-id="which-command">1. <code>which</code> command</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>which spark<span class="op">-</span>submit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -257,8 +257,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="command-command" class="level3">
-<h3 class="anchored" data-anchor-id="command-command"><code>command</code> command</h3>
+<section id="command-command" class="level2">
+<h2 class="anchored" data-anchor-id="command-command">2. <code>command</code> command</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>command <span class="op">-</span>v spark<span class="op">-</span>submit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -285,8 +285,8 @@ Warning
 </div>
 </div>
 </section>
-<section id="type-command" class="level3">
-<h3 class="anchored" data-anchor-id="type-command"><code>type</code> command</h3>
+<section id="type-command" class="level2">
+<h2 class="anchored" data-anchor-id="type-command">3. <code>type</code> command</h2>
 <p>Show the path</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span><span class="bu">type</span> <span class="op">-</span>p spark<span class="op">-</span>submit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -309,8 +309,8 @@ Warning
 </div>
 </div>
 </section>
-<section id="whereis-command" class="level3">
-<h3 class="anchored" data-anchor-id="whereis-command"><code>whereis</code> command</h3>
+<section id="whereis-command" class="level2">
+<h2 class="anchored" data-anchor-id="whereis-command">4. <code>whereis</code> command</h2>
 <p>Show all the locations of the binary, source, manual page</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>whereis spark<span class="op">-</span>submit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

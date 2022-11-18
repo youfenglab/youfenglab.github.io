@@ -210,6 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#import-packages" id="toc-import-packages" class="nav-link active" data-scroll-target="#import-packages">Import packages</a></li>
   <li><a href="#connect-to-a-database" id="toc-connect-to-a-database" class="nav-link" data-scroll-target="#connect-to-a-database">Connect to a database</a></li>
+  <li><a href="#get-all-the-tables-in-the-database" id="toc-get-all-the-tables-in-the-database" class="nav-link" data-scroll-target="#get-all-the-tables-in-the-database">Get all the tables in the database</a></li>
   <li><a href="#get-information-about-the-schema-of-each-table" id="toc-get-information-about-the-schema-of-each-table" class="nav-link" data-scroll-target="#get-information-about-the-schema-of-each-table">Get information about the schema of each table</a></li>
   </ul>
 </nav>
@@ -256,23 +257,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="import-packages" class="level3">
-<h3 class="anchored" data-anchor-id="import-packages">Import packages</h3>
-<div class="cell" data-execution_count="1">
+<section id="import-packages" class="level2">
+<h2 class="anchored" data-anchor-id="import-packages">Import packages</h2>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlalchemy <span class="im">as</span> sqla</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="connect-to-a-database" class="level3">
-<h3 class="anchored" data-anchor-id="connect-to-a-database">Connect to a database</h3>
-<div class="cell" data-execution_count="2">
+<section id="connect-to-a-database" class="level2">
+<h2 class="anchored" data-anchor-id="connect-to-a-database">Connect to a database</h2>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> sqla.create_engine(<span class="st">'mysql+mysqlconnector://root:@localhost:3306/farmers_market'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Get all the tables in the database</p>
-<div class="cell" data-execution_count="3">
+</section>
+<section id="get-all-the-tables-in-the-database" class="level2">
+<h2 class="anchored" data-anchor-id="get-all-the-tables-in-the-database">Get all the tables in the database</h2>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>db_tables <span class="op">=</span> pd.read_sql(<span class="st">'show tables from farmers_market'</span>, db)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>db_tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display">
 
 <div>
 
@@ -330,9 +333,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="get-information-about-the-schema-of-each-table" class="level3">
-<h3 class="anchored" data-anchor-id="get-information-about-the-schema-of-each-table">Get information about the schema of each table</h3>
-<div class="cell" data-execution_count="4">
+<section id="get-information-about-the-schema-of-each-table" class="level2">
+<h2 class="anchored" data-anchor-id="get-information-about-the-schema-of-each-table">Get information about the schema of each table</h2>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tables <span class="op">=</span> db_tables[<span class="st">'Tables_in_farmers_market'</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> table <span class="kw">in</span> tables:</span>
@@ -427,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>product <span class="op">=</span> pd.read_sql(<span class="st">'select * from product'</span>, db)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>product.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -445,9 +448,9 @@ dtypes: int64(2), object(3)
 memory usage: 1.0+ KB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.read_sql(<span class="st">'select product_id from product limit 5'</span>, db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display">
 
 <div>
 

@@ -204,7 +204,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#get-the-list-of-all-avaliable-datasets-from-haggingface" id="toc-get-the-list-of-all-avaliable-datasets-from-haggingface" class="nav-link active" data-scroll-target="#get-the-list-of-all-avaliable-datasets-from-haggingface">Get the list of all avaliable datasets from haggingface</a></li>
-  <li><a href="#load-a-dataset-from-huggingface" id="toc-load-a-dataset-from-huggingface" class="nav-link" data-scroll-target="#load-a-dataset-from-huggingface">Load a dataset from huggingface</a></li>
+  <li><a href="#load-a-dataset-from-huggingface" id="toc-load-a-dataset-from-huggingface" class="nav-link" data-scroll-target="#load-a-dataset-from-huggingface">Load a dataset from huggingface</a>
+  <ul class="collapse">
+  <li><a href="#load-the-whole-dataset" id="toc-load-the-whole-dataset" class="nav-link" data-scroll-target="#load-the-whole-dataset">Load the whole dataset</a></li>
+  <li><a href="#load-part-of-the-dataset" id="toc-load-part-of-the-dataset" class="nav-link" data-scroll-target="#load-part-of-the-dataset">Load part of the dataset</a></li>
+  </ul></li>
   <li><a href="#load-a-csv-file-from-remote-or-local" id="toc-load-a-csv-file-from-remote-or-local" class="nav-link" data-scroll-target="#load-a-csv-file-from-remote-or-local">Load a <code>csv</code> file from remote or local</a></li>
   </ul>
 </nav>
@@ -250,8 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="get-the-list-of-all-avaliable-datasets-from-haggingface" class="level3">
-<h3 class="anchored" data-anchor-id="get-the-list-of-all-avaliable-datasets-from-haggingface">Get the list of all avaliable datasets from haggingface</h3>
+<section id="get-the-list-of-all-avaliable-datasets-from-haggingface" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-list-of-all-avaliable-datasets-from-haggingface">Get the list of all avaliable datasets from haggingface</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> list_datasets</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -259,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>all_datasets <span class="op">=</span> list_datasets()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(all_datasets), all_datasets[:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>(12223,
+<pre><code>(14199,
  ['acronym_identification',
   'ade_corpus_v2',
   'adversarial_qa',
@@ -273,12 +277,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="load-a-dataset-from-huggingface" class="level3">
-<h3 class="anchored" data-anchor-id="load-a-dataset-from-huggingface">Load a dataset from huggingface</h3>
+<section id="load-a-dataset-from-huggingface" class="level2">
+<h2 class="anchored" data-anchor-id="load-a-dataset-from-huggingface">Load a dataset from huggingface</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><em>1.Load the whole dataset</em></p>
+<section id="load-the-whole-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-whole-dataset">Load the whole dataset</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>emotions <span class="op">=</span> load_dataset(<span class="st">'emotion'</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>emotions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -288,7 +293,7 @@ Reusing dataset emotion (/Users/youfeng/.cache/huggingface/datasets/emotion/defa
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"da20d8cf620b4a0aa296f7cad5105c7f","version_major":2,"version_minor":0}
+{"model_id":"2aed9c4b7ebf41c18603c9a5bc612716","version_major":2,"version_minor":0}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -308,7 +313,9 @@ Reusing dataset emotion (/Users/youfeng/.cache/huggingface/datasets/emotion/defa
 })</code></pre>
 </div>
 </div>
-<p><em>2.Load part of the dataset</em></p>
+</section>
+<section id="load-part-of-the-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="load-part-of-the-dataset">Load part of the dataset</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>emotions <span class="op">=</span> load_dataset(<span class="st">'emotion'</span>, split<span class="op">=</span><span class="st">'train'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>emotions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -332,7 +339,7 @@ Reusing dataset emotion (/Users/youfeng/.cache/huggingface/datasets/emotion/defa
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"479b27d1f570481b9599712919281f18","version_major":2,"version_minor":0}
+{"model_id":"78c691ba35f745d6a2badd0ceb93dd5d","version_major":2,"version_minor":0}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -347,8 +354,9 @@ Reusing dataset emotion (/Users/youfeng/.cache/huggingface/datasets/emotion/defa
 </div>
 </div>
 </section>
-<section id="load-a-csv-file-from-remote-or-local" class="level3">
-<h3 class="anchored" data-anchor-id="load-a-csv-file-from-remote-or-local">Load a <code>csv</code> file from remote or local</h3>
+</section>
+<section id="load-a-csv-file-from-remote-or-local" class="level2">
+<h2 class="anchored" data-anchor-id="load-a-csv-file-from-remote-or-local">Load a <code>csv</code> file from remote or local</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -376,7 +384,7 @@ Reusing dataset csv (/Users/youfeng/.cache/huggingface/datasets/csv/default-8f5d
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8f6274c14f444b059ed25bb715580bf7","version_major":2,"version_minor":0}
+{"model_id":"c0de3f16200243a9a3b4be8ae11674d3","version_major":2,"version_minor":0}
 </script>
 </div>
 <div class="cell-output cell-output-display">
@@ -401,7 +409,7 @@ Tip: Load several files
 <p><code>data_files= [file1, file2 ...]</code>, but the columns of the files should be the same, otherwise you will get error.</p>
 </div>
 </div>
-<p><em>If you want to split the training set into train and validation parts, you can do it as below</em></p>
+<p><strong>If you want to split the training set into train and validation parts, you can do it as below</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> trn_ds[<span class="st">'train'</span>].train_test_split(test_size<span class="op">=</span><span class="fl">0.2</span>) <span class="co"># Here we use 20% samples as validation part</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -418,7 +426,7 @@ Tip: Load several files
 })</code></pre>
 </div>
 </div>
-<p><em>If you want to use param <code>“stratify”</code> like scikit-learn, you can do it as below</em></p>
+<p><strong>If you want to use param <code>“stratify”</code> like scikit-learn, you can do it as below</strong></p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

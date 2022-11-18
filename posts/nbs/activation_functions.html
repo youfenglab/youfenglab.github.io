@@ -201,9 +201,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#why-we-need-activation-functions" id="toc-why-we-need-activation-functions" class="nav-link active" data-scroll-target="#why-we-need-activation-functions">Why we need activation functions?</a></li>
+  <li><a href="#the-common-activation-functions" id="toc-the-common-activation-functions" class="nav-link" data-scroll-target="#the-common-activation-functions">The common activation functions</a>
+  <ul class="collapse">
   <li><a href="#relu-function" id="toc-relu-function" class="nav-link" data-scroll-target="#relu-function">ReLU function</a></li>
   <li><a href="#sigmoid-function" id="toc-sigmoid-function" class="nav-link" data-scroll-target="#sigmoid-function">Sigmoid function</a></li>
   <li><a href="#tanh-function" id="toc-tanh-function" class="nav-link" data-scroll-target="#tanh-function">Tanh function</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -248,8 +251,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="why-we-need-activation-functions" class="level3">
-<h3 class="anchored" data-anchor-id="why-we-need-activation-functions">Why we need activation functions?</h3>
+<section id="why-we-need-activation-functions" class="level2">
+<h2 class="anchored" data-anchor-id="why-we-need-activation-functions">Why we need activation functions?</h2>
 <p>Activation functions decide whether a neuron should be activated or not. They are differentiable, then the information can be carried between the inputs and outputs. In practice, most of the actication functions are non-linearity.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
@@ -257,6 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="the-common-activation-functions" class="level2">
+<h2 class="anchored" data-anchor-id="the-common-activation-functions">The common activation functions</h2>
 <section id="relu-function" class="level3">
 <h3 class="anchored" data-anchor-id="relu-function">ReLU function</h3>
 <p><span class="math display">\[ReLU(x) = max(x,0)\]</span></p>
@@ -353,6 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

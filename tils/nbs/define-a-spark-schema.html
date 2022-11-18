@@ -201,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
   <li><a href="#define-it-programmatically" id="toc-define-it-programmatically" class="nav-link" data-scroll-target="#define-it-programmatically">Define it programmatically</a></li>
   <li><a href="#define-it-using-ddl" id="toc-define-it-using-ddl" class="nav-link" data-scroll-target="#define-it-using-ddl">Define it using DDL</a></li>
+  <li><a href="#stop-spark-session" id="toc-stop-spark-session" class="nav-link" data-scroll-target="#stop-spark-session">Stop spark session</a></li>
   </ul>
 </nav>
     </div>
@@ -239,8 +240,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -249,8 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">'Simple-table'</span>).getOrCreate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="define-it-programmatically" class="level3">
-<h3 class="anchored" data-anchor-id="define-it-programmatically">Define it programmatically</h3>
+<section id="define-it-programmatically" class="level2">
+<h2 class="anchored" data-anchor-id="define-it-programmatically">Define it programmatically</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> StructType([StructField(<span class="st">"first name"</span>, StringType(), <span class="va">False</span>), </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                     StructField(<span class="st">"last name"</span>, StringType(), <span class="va">False</span>), </span>
@@ -280,8 +281,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="define-it-using-ddl" class="level3">
-<h3 class="anchored" data-anchor-id="define-it-using-ddl">Define it using DDL</h3>
+<section id="define-it-using-ddl" class="level2">
+<h2 class="anchored" data-anchor-id="define-it-using-ddl">Define it using DDL</h2>
 <p>This method is much simper.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> <span class="st">"first_name STRING, last_name STRING, weight INT"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -318,6 +319,9 @@ Warning
 <p>A disadvantage of this method is we cannot put <code>space</code> or <code>-</code> between words.</p>
 </div>
 </div>
+</section>
+<section id="stop-spark-session" class="level2">
+<h2 class="anchored" data-anchor-id="stop-spark-session">Stop spark session</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>spark.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

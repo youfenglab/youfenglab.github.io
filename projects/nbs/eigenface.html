@@ -199,8 +199,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#import-packages" id="toc-import-packages" class="nav-link active" data-scroll-target="#import-packages">Import packages</a></li>
-  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a>
+  <ul class="collapse">
   <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">Understand the data</a></li>
+  </ul></li>
   <li><a href="#define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." id="toc-define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." class="nav-link" data-scroll-target="#define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images.">Define a function to convert the data to image array and display the face images.</a></li>
   </ul>
 </nav>
@@ -240,8 +242,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="import-packages" class="level3">
-<h3 class="anchored" data-anchor-id="import-packages">Import packages</h3>
+<section id="import-packages" class="level2">
+<h2 class="anchored" data-anchor-id="import-packages">Import packages</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -249,8 +251,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-data" class="level3">
-<h3 class="anchored" data-anchor-id="load-data">Load data</h3>
+<section id="load-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> np.loadtxt(<span class="st">'../../../data/faces_train.txt'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.loadtxt(<span class="st">'../../../data/faces_train_labels.txt'</span>)</span>
@@ -267,7 +269,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>((120, 1024), (120,))</code></pre>
 </div>
 </div>
-</section>
 <section id="understand-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="understand-the-data">Understand the data</h3>
 <div class="cell">
@@ -290,8 +291,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." class="level3">
-<h3 class="anchored" data-anchor-id="define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images.">Define a function to convert the data to image array and display the face images.</h3>
+</section>
+<section id="define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." class="level2">
+<h2 class="anchored" data-anchor-id="define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images.">Define a function to convert the data to image array and display the face images.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_images(arr, num_person, num_faces):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> arr[:num_person<span class="op">*</span><span class="dv">10</span>]</span>

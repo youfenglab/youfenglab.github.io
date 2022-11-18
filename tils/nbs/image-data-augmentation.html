@@ -125,6 +125,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Youfeng Zhou - Image data augmentation">
@@ -200,8 +201,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#load-an-original-image" id="toc-load-an-original-image" class="nav-link active" data-scroll-target="#load-an-original-image">Load an original image</a></li>
   <li><a href="#convert-the-image-to-tensor" id="toc-convert-the-image-to-tensor" class="nav-link" data-scroll-target="#convert-the-image-to-tensor">Convert the image to Tensor</a></li>
-  <li><a href="#resize-the-image-to-224-by-224" id="toc-resize-the-image-to-224-by-224" class="nav-link" data-scroll-target="#resize-the-image-to-224-by-224">Resize the image to 224 by 224</a></li>
-  <li><a href="#flip-an-image" id="toc-flip-an-image" class="nav-link" data-scroll-target="#flip-an-image">Flip an image</a></li>
+  <li><a href="#resize-the-image" id="toc-resize-the-image" class="nav-link" data-scroll-target="#resize-the-image">Resize the image</a></li>
+  <li><a href="#flip-an-image" id="toc-flip-an-image" class="nav-link" data-scroll-target="#flip-an-image">Flip an image</a>
+  <ul class="collapse">
+  <li><a href="#flip-horizontally" id="toc-flip-horizontally" class="nav-link" data-scroll-target="#flip-horizontally">1. Flip horizontally</a></li>
+  <li><a href="#flip-vertically" id="toc-flip-vertically" class="nav-link" data-scroll-target="#flip-vertically">2. Flip vertically</a></li>
+  </ul></li>
   <li><a href="#change-brightness-contrast-saturation-and-hue-of-an-image" id="toc-change-brightness-contrast-saturation-and-hue-of-an-image" class="nav-link" data-scroll-target="#change-brightness-contrast-saturation-and-hue-of-an-image">Change brightness, contrast, saturation and hue of an image</a></li>
   <li><a href="#turn-an-image-grayscale" id="toc-turn-an-image-grayscale" class="nav-link" data-scroll-target="#turn-an-image-grayscale">Turn an image grayscale</a></li>
   <li><a href="#crop-an-image" id="toc-crop-an-image" class="nav-link" data-scroll-target="#crop-an-image">Crop an image</a></li>
@@ -245,8 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>This notebook will show the common methods used for preparing image data for vision models in PyTorch.</p>
-<section id="load-an-original-image" class="level3">
-<h3 class="anchored" data-anchor-id="load-an-original-image">Load an original image</h3>
+<section id="load-an-original-image" class="level2">
+<h2 class="anchored" data-anchor-id="load-an-original-image">Load an original image</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'images/cat.jpeg'</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -255,8 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="convert-the-image-to-tensor" class="level3">
-<h3 class="anchored" data-anchor-id="convert-the-image-to-tensor">Convert the image to Tensor</h3>
+<section id="convert-the-image-to-tensor" class="level2">
+<h2 class="anchored" data-anchor-id="convert-the-image-to-tensor">Convert the image to Tensor</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>toTensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>toTensor(img).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -266,8 +271,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>From above, we know that the image size is <code>1199 * 1200</code>.</p>
 </section>
-<section id="resize-the-image-to-224-by-224" class="level3">
-<h3 class="anchored" data-anchor-id="resize-the-image-to-224-by-224">Resize the image to 224 by 224</h3>
+<section id="resize-the-image" class="level2">
+<h2 class="anchored" data-anchor-id="resize-the-image">Resize the image</h2>
+<p><em>Here we resize the image to size 224 <span class="math inline">\(\times\)</span> 224.</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>resize <span class="op">=</span> torchvision.transforms.Resize(<span class="dv">224</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>img_rs <span class="op">=</span> resize(img)</span>
@@ -277,9 +283,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="flip-an-image" class="level3">
-<h3 class="anchored" data-anchor-id="flip-an-image">Flip an image</h3>
-<p>Flip horizontally</p>
+<section id="flip-an-image" class="level2">
+<h2 class="anchored" data-anchor-id="flip-an-image">Flip an image</h2>
+<section id="flip-horizontally" class="level3">
+<h3 class="anchored" data-anchor-id="flip-horizontally">1. Flip horizontally</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flip <span class="op">=</span> torchvision.transforms.RandomHorizontalFlip(p<span class="op">=</span><span class="fl">1.0</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>flip(img_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -287,7 +294,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="image-data-augmentation_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>Flip vertically</p>
+</section>
+<section id="flip-vertically" class="level3">
+<h3 class="anchored" data-anchor-id="flip-vertically">2. Flip vertically</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>flip <span class="op">=</span> torchvision.transforms.RandomVerticalFlip(p<span class="op">=</span><span class="fl">1.0</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>flip(img_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -296,8 +305,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="change-brightness-contrast-saturation-and-hue-of-an-image" class="level3">
-<h3 class="anchored" data-anchor-id="change-brightness-contrast-saturation-and-hue-of-an-image">Change brightness, contrast, saturation and hue of an image</h3>
+</section>
+<section id="change-brightness-contrast-saturation-and-hue-of-an-image" class="level2">
+<h2 class="anchored" data-anchor-id="change-brightness-contrast-saturation-and-hue-of-an-image">Change brightness, contrast, saturation and hue of an image</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>colorjitter <span class="op">=</span> torchvision.transforms.ColorJitter(brightness<span class="op">=</span><span class="fl">0.5</span>, contrast<span class="op">=</span><span class="fl">0.5</span>, saturation<span class="op">=</span><span class="fl">0.5</span>, hue<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>colorjitter(img_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -306,8 +316,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="turn-an-image-grayscale" class="level3">
-<h3 class="anchored" data-anchor-id="turn-an-image-grayscale">Turn an image grayscale</h3>
+<section id="turn-an-image-grayscale" class="level2">
+<h2 class="anchored" data-anchor-id="turn-an-image-grayscale">Turn an image grayscale</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grayscale <span class="op">=</span> torchvision.transforms.Grayscale()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>grayscale(img_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -316,8 +326,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="crop-an-image" class="level3">
-<h3 class="anchored" data-anchor-id="crop-an-image">Crop an image</h3>
+<section id="crop-an-image" class="level2">
+<h2 class="anchored" data-anchor-id="crop-an-image">Crop an image</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>crop <span class="op">=</span> torchvision.transforms.CenterCrop(<span class="dv">128</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>crop(img_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
