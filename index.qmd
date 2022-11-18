@@ -26,7 +26,13 @@ page-layout: full
 :::{#Projects}
 :::
 
+<a href="projects/index.qmd"> <button type="button" class="btn btn-light float-end btn-md">More projects</button></a>
+
+<br>
+
 # My latest posts
 
 :::{#posts}
 :::
+
+<a href="posts/index.qmd"> <button type="button" class="btn btn-light float-end btn-md">More posts</button></a>
