@@ -81,7 +81,7 @@
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\nPCA\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects/nbs/house_price_prediction.html",
@@ -109,7 +109,7 @@
     "href": "projects/nbs/eigenface.html",
     "title": "EigenFace",
     "section": "",
-    "text": "First\nload data\n\n\nSecond\nLook at the data"
+    "text": "Import packages\n\n%matplotlib inline\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom PIL import Image\n\n\n\nLoad data\n\nX_train = np.loadtxt('../../../data/faces_train.txt')\ny_train = np.loadtxt('../../../data/faces_train_labels.txt')\nX_train.shape, y_train.shape\n\n((280, 1024), (280,))\n\n\n\nX_test = np.loadtxt('../../../data/faces_test.txt')\ny_test= np.loadtxt('../../../data/faces_test_labels.txt')\nX_test.shape, y_test.shape\n\n((120, 1024), (120,))\n\n\n\n\nUnderstand the data\n\nsample = X_train[0]\nsample.shape\n\n(1024,)\n\n\n\nX_train.shape[0] / 40\n\n7.0\n\n\n\nX_test.shape[0] / 40\n\n3.0\n\n\n\n\nDefine a function to convert the data to image array and display the face images.\n\ndef show_images(arr, num_person, num_faces):\n    data = arr[:num_person*10]\n    fig, axs = plt.subplots(num_person, num_faces, figsize=(num_faces, num_person))\n    flat_axs = axs.flatten()\n    for i in range(num_person):\n        for j in range(num_faces):\n            flat_axs[i*num_faces+j].imshow(arr[i * int(arr.shape[0] / 40) + j].reshape(32, 32).T)\n            flat_axs[i*num_faces+j].axis('off')\n    plt.set_cmap('gray')\n    plt.tight_layout()\n    plt.show()\n\n\nshow_images(X_train, 2, 5)"
   },
   {
     "objectID": "about.html",
