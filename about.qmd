@@ -13,7 +13,7 @@ about:
 page-layout: full
 ---
 
-Hi, 👋 I am Youfeng,
+Hi 👋 I am Youfeng,
 
 a data analysis and data science learner. 
 
