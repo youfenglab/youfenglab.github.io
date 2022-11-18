@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2022-05-23">
-<meta name="description" content="This notebook will">
+<meta name="description" content="This notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.">
 
 <title>Youfeng Zhou - EigenFace</title>
 <style>
@@ -124,15 +124,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Youfeng Zhou - EigenFace">
-<meta property="og:description" content="This notebook will">
+<meta property="og:description" content="This notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.">
+<meta property="og:image" content="https://github.com/youfenglab/youfenglab.github.io/projects/nbs/images/eigenface.png">
 <meta property="og:site-name" content="Youfeng Zhou">
+<meta property="og:image:height" content="290">
+<meta property="og:image:width" content="488">
 <meta name="twitter:title" content="Youfeng Zhou - EigenFace">
-<meta name="twitter:description" content="This notebook will">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="This notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.">
+<meta name="twitter:image" content="https://github.com/youfenglab/youfenglab.github.io/projects/nbs/images/eigenface.png">
+<meta name="twitter:image-height" content="290">
+<meta name="twitter:image-width" content="488">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
@@ -204,6 +214,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#understand-the-data" id="toc-understand-the-data" class="nav-link" data-scroll-target="#understand-the-data">Understand the data</a></li>
   </ul></li>
   <li><a href="#define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." id="toc-define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images." class="nav-link" data-scroll-target="#define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images.">Define a function to convert the data to image array and display the face images.</a></li>
+  <li><a href="#show-mean-face" id="toc-show-mean-face" class="nav-link" data-scroll-target="#show-mean-face">Show mean face</a></li>
+  <li><a href="#perform-pca-from-covariance-matrix" id="toc-perform-pca-from-covariance-matrix" class="nav-link" data-scroll-target="#perform-pca-from-covariance-matrix">Perform PCA from covariance matrix</a>
+  <ul class="collapse">
+  <li><a href="#compute-eigenvalues-and-eigenvectors-of-covariance-matrix" id="toc-compute-eigenvalues-and-eigenvectors-of-covariance-matrix" class="nav-link" data-scroll-target="#compute-eigenvalues-and-eigenvectors-of-covariance-matrix">Compute eigenvalues and eigenvectors of covariance matrix</a></li>
+  <li><a href="#show-top-5-eigenfaces" id="toc-show-top-5-eigenfaces" class="nav-link" data-scroll-target="#show-top-5-eigenfaces">Show top 5 eigenfaces</a></li>
+  </ul></li>
+  <li><a href="#perform-pca-with-svd" id="toc-perform-pca-with-svd" class="nav-link" data-scroll-target="#perform-pca-with-svd">Perform PCA with SVD</a>
+  <ul class="collapse">
+  <li><a href="#check-if-the-top-5-eigenvalues-are-equal" id="toc-check-if-the-top-5-eigenvalues-are-equal" class="nav-link" data-scroll-target="#check-if-the-top-5-eigenvalues-are-equal">Check if the top 5 eigenvalues are equal</a></li>
+  <li><a href="#check-if-the-top-5-eigenvectors-are-equal" id="toc-check-if-the-top-5-eigenvectors-are-equal" class="nav-link" data-scroll-target="#check-if-the-top-5-eigenvectors-are-equal">Check if the top 5 eigenvectors are equal</a></li>
+  <li><a href="#show-top-5-eigenfaces-1" id="toc-show-top-5-eigenfaces-1" class="nav-link" data-scroll-target="#show-top-5-eigenfaces-1">Show top 5 eigenfaces</a></li>
+  </ul></li>
+  <li><a href="#projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them." id="toc-projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them." class="nav-link" data-scroll-target="#projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them.">Projecting 3 persons’ faces data down to 2 dimensions and plot them.</a></li>
+  <li><a href="#explained-variance-ratio" id="toc-explained-variance-ratio" class="nav-link" data-scroll-target="#explained-variance-ratio">Explained variance ratio</a></li>
+  <li><a href="#reconstruct-face-from-top-principle-components" id="toc-reconstruct-face-from-top-principle-components" class="nav-link" data-scroll-target="#reconstruct-face-from-top-principle-components">Reconstruct face from top principle components</a>
+  <ul class="collapse">
+  <li><a href="#original-face" id="toc-original-face" class="nav-link" data-scroll-target="#original-face">Original face</a></li>
+  <li><a href="#reconstruct_face-method-1" id="toc-reconstruct_face-method-1" class="nav-link" data-scroll-target="#reconstruct_face-method-1">Reconstruct_face method 1</a></li>
+  <li><a href="#reconstruct_face-method-2" id="toc-reconstruct_face-method-2" class="nav-link" data-scroll-target="#reconstruct_face-method-2">Reconstruct_face method 2</a></li>
+  <li><a href="#confirm-the-two-reconstruct_faces-are-the-same" id="toc-confirm-the-two-reconstruct_faces-are-the-same" class="nav-link" data-scroll-target="#confirm-the-two-reconstruct_faces-are-the-same">Confirm the two reconstruct_faces are the same</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -214,14 +245,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title">
 <h1 class="title">EigenFace</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">machine learning</div>
     <div class="quarto-category">PCA</div>
+    <div class="quarto-category">SVD</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    This notebook will
+    This notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.
   </div>
 </div>
 
@@ -247,8 +278,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level2">
@@ -308,13 +341,368 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>show_images(X_train, <span class="dv">2</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>show_images(X_train, <span class="dv">3</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="eigenface_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+</section>
+<section id="show-mean-face" class="level2">
+<h2 class="anchored" data-anchor-id="show-mean-face">Show mean face</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_image(data):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(data.reshape(<span class="dv">32</span>, <span class="dv">32</span>).T)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    plt.set_cmap(<span class="st">'gray'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> X_train.mean(<span class="dv">0</span>) <span class="co"># shape (1024,)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>show_image(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="perform-pca-from-covariance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="perform-pca-from-covariance-matrix">Perform PCA from covariance matrix</h2>
+<section id="compute-eigenvalues-and-eigenvectors-of-covariance-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="compute-eigenvalues-and-eigenvectors-of-covariance-matrix">Compute eigenvalues and eigenvectors of covariance matrix</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pca(data):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> data.mean(<span class="dv">0</span>) <span class="co"># shape (1024,)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> data <span class="op">-</span> mean</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    S <span class="op">=</span> Z.T <span class="op">@</span> Z</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    eigenvals, eigenvecs <span class="op">=</span> np.linalg.eigh(S) <span class="co"># the eigen values are sorted from smallest to largest</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    reversed_idx <span class="op">=</span> np.argsort(<span class="op">-</span>eigenvals) <span class="co"># get the reversed indices from the largest to smallest</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    eigenvals <span class="op">=</span> eigenvals[reversed_idx]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    eigenvecs <span class="op">=</span> eigenvecs[:, reversed_idx]</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> eigenvals, eigenvecs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>eigen_vals, eigen_vecs <span class="op">=</span> pca(X_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: user 1.15 s, sys: 63.9 ms, total: 1.21 s
+Wall time: 174 ms</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>eigen_vals.shape, eigen_vecs.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>((1024,), (1024, 1024))</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>eigen_vals</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([ 7.59100215e+07,  4.19397005e+07,  2.54955933e+07, ...,
+       -5.02190332e-09, -7.09703055e-09, -7.63365465e-09])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>eigen_vecs[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([[-0.01287756, -0.05501646,  0.0041873 , ...,  0.        ,
+         0.        ,  0.        ],
+       [-0.01462181, -0.06097046, -0.00761386, ...,  0.04503731,
+         0.06237077,  0.21112058],
+       [-0.01704114, -0.06917858, -0.01997429, ...,  0.08273158,
+         0.36417853,  0.14920292],
+       [-0.02048617, -0.07692255, -0.02277752, ..., -0.04538269,
+        -0.0119913 , -0.37879662],
+       [-0.02213695, -0.07991882, -0.02080318, ...,  0.02432163,
+         0.13519464,  0.02273907]])</code></pre>
+</div>
+</div>
+</section>
+<section id="show-top-5-eigenfaces" class="level3">
+<h3 class="anchored" data-anchor-id="show-top-5-eigenfaces">Show top 5 eigenfaces</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_pc_images(data):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    nrows, ncols <span class="op">=</span> data.shape</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, ncols, figsize<span class="op">=</span>(ncols, <span class="fl">1.5</span>))</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    flat_axs <span class="op">=</span> axs.flatten()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(ncols):</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        flat_axs[i].imshow(data[:, i].reshape(<span class="dv">32</span>, <span class="dv">32</span>).T)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        flat_axs[i].axis(<span class="st">'off'</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        flat_axs[i].set_title(<span class="ss">f'pc</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    plt.set_cmap(<span class="st">'gray'</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>show_pc_images(eigen_vecs[:, :<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="perform-pca-with-svd" class="level2">
+<h2 class="anchored" data-anchor-id="perform-pca-with-svd">Perform PCA with SVD</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> svd(data):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    data_centered <span class="op">=</span> data <span class="op">-</span> data.mean(<span class="dv">0</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    U, s, Vt <span class="op">=</span> np.linalg.svd(data_centered)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> U, s, Vt.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>U, s, V <span class="op">=</span> svd(X_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: user 837 ms, sys: 26.8 ms, total: 864 ms
+Wall time: 124 ms</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>U.shape, s.shape, V.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>((280, 280), (280,), (1024, 1024))</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>V is the same as the eigen vector matrix, and <span class="math inline">\(s^2\)</span> is equal to the corresponding eigen values.</p>
+</div>
+</div>
+<section id="check-if-the-top-5-eigenvalues-are-equal" class="level3">
+<h3 class="anchored" data-anchor-id="check-if-the-top-5-eigenvalues-are-equal">Check if the top 5 eigenvalues are equal</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>np.square(s[:<span class="dv">5</span>]), eigen_vals[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(array([75910021.54729882, 41939700.47489863, 25495593.34635307,
+        17539063.72985784, 12170662.99105223]),
+ array([75910021.54729888, 41939700.47489879, 25495593.34635304,
+        17539063.72985789, 12170662.99105226]))</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>np.allclose(np.square(s[:<span class="dv">5</span>]), eigen_vals[:<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>True</code></pre>
+</div>
+</div>
+</section>
+<section id="check-if-the-top-5-eigenvectors-are-equal" class="level3">
+<h3 class="anchored" data-anchor-id="check-if-the-top-5-eigenvectors-are-equal">Check if the top 5 eigenvectors are equal</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>V[:, :<span class="dv">5</span>], eigen_vecs[:, :<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(array([[-0.01287756,  0.05501646,  0.0041873 ,  0.00651911,  0.0704008 ],
+        [-0.01462181,  0.06097046, -0.00761386,  0.00091407,  0.07140231],
+        [-0.01704114,  0.06917858, -0.01997429, -0.00113944,  0.0715405 ],
+        ...,
+        [ 0.00308199, -0.04617929, -0.03671734,  0.03130467,  0.07777847],
+        [ 0.00747202, -0.0494147 , -0.04110058,  0.03836678,  0.07902728],
+        [ 0.0109414 , -0.05125083, -0.03781413,  0.04223883,  0.07396954]]),
+ array([[-0.01287756, -0.05501646,  0.0041873 , -0.00651911,  0.0704008 ],
+        [-0.01462181, -0.06097046, -0.00761386, -0.00091407,  0.07140231],
+        [-0.01704114, -0.06917858, -0.01997429,  0.00113944,  0.0715405 ],
+        ...,
+        [ 0.00308199,  0.04617929, -0.03671734, -0.03130467,  0.07777847],
+        [ 0.00747202,  0.0494147 , -0.04110058, -0.03836678,  0.07902728],
+        [ 0.0109414 ,  0.05125083, -0.03781413, -0.04223883,  0.07396954]]))</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since eigenvectors can be same values, but with opposite signs, we compare the absolute values.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>np.allclose(np.<span class="bu">abs</span>(V[:, :<span class="dv">5</span>]), np.<span class="bu">abs</span>(eigen_vecs[:, :<span class="dv">5</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>True</code></pre>
+</div>
+</div>
+</section>
+<section id="show-top-5-eigenfaces-1" class="level3">
+<h3 class="anchored" data-anchor-id="show-top-5-eigenfaces-1">Show top 5 eigenfaces</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>show_pc_images(V[:, :<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them." class="level2">
+<h2 class="anchored" data-anchor-id="projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them.">Projecting 3 persons’ faces data down to 2 dimensions and plot them.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> X_train[:<span class="dv">7</span><span class="op">*</span><span class="dv">3</span>, :] <span class="op">@</span> V[:, :<span class="dv">2</span>]</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>T.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(21, 2)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_train[:<span class="dv">7</span><span class="op">*</span><span class="dv">3</span>].reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(21, 1)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>data_2d <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>np.concatenate((T, y), axis<span class="op">=</span><span class="dv">1</span>), columns<span class="op">=</span>[<span class="st">'pc1'</span>, <span class="st">'pc2'</span>, <span class="st">'person'</span>])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>data_2d.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>pc1</th>
+      <th>pc2</th>
+      <th>person</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-4907.496730</td>
+      <td>458.054067</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-4344.197376</td>
+      <td>1289.734627</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-4775.345055</td>
+      <td>577.090674</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-4492.115417</td>
+      <td>-930.775823</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-4639.398032</td>
+      <td>840.018975</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>data_2d, x<span class="op">=</span><span class="st">'pc1'</span>, y<span class="op">=</span><span class="st">'pc2'</span>, hue<span class="op">=</span><span class="st">'person'</span>, palette<span class="op">=</span>[<span class="st">'blue'</span>, <span class="st">'red'</span>, <span class="st">'green'</span>], ax<span class="op">=</span>ax)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-31-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The above plot shows that the data is separable.</p>
+</section>
+<section id="explained-variance-ratio" class="level2">
+<h2 class="anchored" data-anchor-id="explained-variance-ratio">Explained variance ratio</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>s.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(280,)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>s_norm <span class="op">=</span> s <span class="op">/</span> s.<span class="bu">sum</span>()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>plt.plot(np.cumsum(s_norm))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'singular values'</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'cumulative sum'</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">280</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reconstruct-face-from-top-principle-components" class="level2">
+<h2 class="anchored" data-anchor-id="reconstruct-face-from-top-principle-components">Reconstruct face from top principle components</h2>
+<section id="original-face" class="level3">
+<h3 class="anchored" data-anchor-id="original-face">Original face</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>picked_face <span class="op">=</span> X_train[<span class="dv">0</span>]</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>show_image(picked_face)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-34-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reconstruct_face-method-1" class="level3">
+<h3 class="anchored" data-anchor-id="reconstruct_face-method-1">Reconstruct_face method 1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">20</span> <span class="co"># the kth eigenvector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>reconstruct_face1 <span class="op">=</span> (picked_face <span class="op">-</span> mean) <span class="op">@</span> eigen_vecs[:, :k] <span class="op">@</span> eigen_vecs[:, :k].T <span class="op">+</span> mean</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>show_image(reconstruct_face1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-36-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="reconstruct_face-method-2" class="level3">
+<h3 class="anchored" data-anchor-id="reconstruct_face-method-2">Reconstruct_face method 2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> np.diag(s)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>S.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(280, 280)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>reconstruct_face2 <span class="op">=</span> U[<span class="dv">0</span>, :k] <span class="op">@</span> S[:k, :k] <span class="op">@</span> (V.T)[:k, :] <span class="op">+</span> mean</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>reconstruct_face2.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(1024,)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>show_image(reconstruct_face2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="eigenface_files/figure-html/cell-41-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="confirm-the-two-reconstruct_faces-are-the-same" class="level3">
+<h3 class="anchored" data-anchor-id="confirm-the-two-reconstruct_faces-are-the-same">Confirm the two reconstruct_faces are the same</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>np.allclose(reconstruct_face1, reconstruct_face2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>True</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

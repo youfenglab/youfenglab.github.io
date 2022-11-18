@@ -81,7 +81,7 @@
     "href": "index.html",
     "title": "My latest projects",
     "section": "",
-    "text": "My latest projects\n\n\n\n\n\n\n\n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n More projects\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items\n\n\n More posts"
+    "text": "My latest projects\n\n\n\n\n\n\n\n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n More projects\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items\n\n\n More posts"
   },
   {
     "objectID": "tils/index.html",
@@ -228,7 +228,7 @@
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate english names\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nmachine learning\n\n\nPCA\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nPCA\n\n\nSVD\n\n\n\nThis notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "projects/nbs/house_price_prediction.html",
@@ -312,7 +312,7 @@
     "href": "projects/nbs/eigenface.html",
     "title": "EigenFace",
     "section": "",
-    "text": "%matplotlib inline\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom PIL import Image"
+    "text": "%matplotlib inline\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport numpy as np\nimport pandas as pd\nfrom PIL import Image"
   },
   {
     "objectID": "projects/nbs/eigenface.html#load-data",
@@ -326,7 +326,49 @@
     "href": "projects/nbs/eigenface.html#define-a-function-to-convert-the-data-to-image-array-and-display-the-face-images.",
     "title": "EigenFace",
     "section": "Define a function to convert the data to image array and display the face images.",
-    "text": "Define a function to convert the data to image array and display the face images.\n\ndef show_images(arr, num_person, num_faces):\n    data = arr[:num_person*10]\n    fig, axs = plt.subplots(num_person, num_faces, figsize=(num_faces, num_person))\n    flat_axs = axs.flatten()\n    for i in range(num_person):\n        for j in range(num_faces):\n            flat_axs[i*num_faces+j].imshow(arr[i * int(arr.shape[0] / 40) + j].reshape(32, 32).T)\n            flat_axs[i*num_faces+j].axis('off')\n    plt.set_cmap('gray')\n    plt.tight_layout()\n    plt.show()\n\n\nshow_images(X_train, 2, 5)"
+    "text": "Define a function to convert the data to image array and display the face images.\n\ndef show_images(arr, num_person, num_faces):\n    data = arr[:num_person*10]\n    fig, axs = plt.subplots(num_person, num_faces, figsize=(num_faces, num_person))\n    flat_axs = axs.flatten()\n    for i in range(num_person):\n        for j in range(num_faces):\n            flat_axs[i*num_faces+j].imshow(arr[i * int(arr.shape[0] / 40) + j].reshape(32, 32).T)\n            flat_axs[i*num_faces+j].axis('off')\n    plt.set_cmap('gray')\n    plt.tight_layout()\n    plt.show()\n\n\nshow_images(X_train, 3, 5)"
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#show-mean-face",
+    "href": "projects/nbs/eigenface.html#show-mean-face",
+    "title": "EigenFace",
+    "section": "Show mean face",
+    "text": "Show mean face\n\ndef show_image(data):\n    fig, ax = plt.subplots(figsize=(1,1))\n    ax.imshow(data.reshape(32, 32).T)\n    ax.axis('off')\n    plt.set_cmap('gray')\n    plt.tight_layout()\n    plt.show()\n\n\nmean = X_train.mean(0) # shape (1024,)\nshow_image(mean)"
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#perform-pca-from-covariance-matrix",
+    "href": "projects/nbs/eigenface.html#perform-pca-from-covariance-matrix",
+    "title": "EigenFace",
+    "section": "Perform PCA from covariance matrix",
+    "text": "Perform PCA from covariance matrix\n\nCompute eigenvalues and eigenvectors of covariance matrix\n\ndef pca(data):\n    mean = data.mean(0) # shape (1024,)\n    Z = data - mean\n    S = Z.T @ Z\n    eigenvals, eigenvecs = np.linalg.eigh(S) # the eigen values are sorted from smallest to largest\n    reversed_idx = np.argsort(-eigenvals) # get the reversed indices from the largest to smallest\n    eigenvals = eigenvals[reversed_idx]\n    eigenvecs = eigenvecs[:, reversed_idx]\n    return eigenvals, eigenvecs\n\n\n%%time\neigen_vals, eigen_vecs = pca(X_train)\n\nCPU times: user 1.15 s, sys: 63.9 ms, total: 1.21 s\nWall time: 174 ms\n\n\n\neigen_vals.shape, eigen_vecs.shape\n\n((1024,), (1024, 1024))\n\n\n\neigen_vals\n\narray([ 7.59100215e+07,  4.19397005e+07,  2.54955933e+07, ...,\n       -5.02190332e-09, -7.09703055e-09, -7.63365465e-09])\n\n\n\neigen_vecs[:5]\n\narray([[-0.01287756, -0.05501646,  0.0041873 , ...,  0.        ,\n         0.        ,  0.        ],\n       [-0.01462181, -0.06097046, -0.00761386, ...,  0.04503731,\n         0.06237077,  0.21112058],\n       [-0.01704114, -0.06917858, -0.01997429, ...,  0.08273158,\n         0.36417853,  0.14920292],\n       [-0.02048617, -0.07692255, -0.02277752, ..., -0.04538269,\n        -0.0119913 , -0.37879662],\n       [-0.02213695, -0.07991882, -0.02080318, ...,  0.02432163,\n         0.13519464,  0.02273907]])\n\n\n\n\nShow top 5 eigenfaces\n\ndef show_pc_images(data):\n    nrows, ncols = data.shape\n    fig, axs = plt.subplots(1, ncols, figsize=(ncols, 1.5))\n    flat_axs = axs.flatten()\n    for i in range(ncols):\n        flat_axs[i].imshow(data[:, i].reshape(32, 32).T)\n        flat_axs[i].axis('off')\n        flat_axs[i].set_title(f'pc{i}')\n    plt.set_cmap('gray')\n    plt.tight_layout()\n    plt.show()\n\n\nshow_pc_images(eigen_vecs[:, :5])"
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#perform-pca-with-svd",
+    "href": "projects/nbs/eigenface.html#perform-pca-with-svd",
+    "title": "EigenFace",
+    "section": "Perform PCA with SVD",
+    "text": "Perform PCA with SVD\n\ndef svd(data):\n    data_centered = data - data.mean(0)\n    U, s, Vt = np.linalg.svd(data_centered)\n    return U, s, Vt.T\n\n\n%%time\nU, s, V = svd(X_train)\n\nCPU times: user 837 ms, sys: 26.8 ms, total: 864 ms\nWall time: 124 ms\n\n\n\nU.shape, s.shape, V.shape\n\n((280, 280), (280,), (1024, 1024))\n\n\n\n\n\n\n\n\nNote\n\n\n\nV is the same as the eigen vector matrix, and \\(s^2\\) is equal to the corresponding eigen values.\n\n\n\nCheck if the top 5 eigenvalues are equal\n\nnp.square(s[:5]), eigen_vals[:5]\n\n(array([75910021.54729882, 41939700.47489863, 25495593.34635307,\n        17539063.72985784, 12170662.99105223]),\n array([75910021.54729888, 41939700.47489879, 25495593.34635304,\n        17539063.72985789, 12170662.99105226]))\n\n\n\nnp.allclose(np.square(s[:5]), eigen_vals[:5])\n\nTrue\n\n\n\n\nCheck if the top 5 eigenvectors are equal\n\nV[:, :5], eigen_vecs[:, :5]\n\n(array([[-0.01287756,  0.05501646,  0.0041873 ,  0.00651911,  0.0704008 ],\n        [-0.01462181,  0.06097046, -0.00761386,  0.00091407,  0.07140231],\n        [-0.01704114,  0.06917858, -0.01997429, -0.00113944,  0.0715405 ],\n        ...,\n        [ 0.00308199, -0.04617929, -0.03671734,  0.03130467,  0.07777847],\n        [ 0.00747202, -0.0494147 , -0.04110058,  0.03836678,  0.07902728],\n        [ 0.0109414 , -0.05125083, -0.03781413,  0.04223883,  0.07396954]]),\n array([[-0.01287756, -0.05501646,  0.0041873 , -0.00651911,  0.0704008 ],\n        [-0.01462181, -0.06097046, -0.00761386, -0.00091407,  0.07140231],\n        [-0.01704114, -0.06917858, -0.01997429,  0.00113944,  0.0715405 ],\n        ...,\n        [ 0.00308199,  0.04617929, -0.03671734, -0.03130467,  0.07777847],\n        [ 0.00747202,  0.0494147 , -0.04110058, -0.03836678,  0.07902728],\n        [ 0.0109414 ,  0.05125083, -0.03781413, -0.04223883,  0.07396954]]))\n\n\n\n\n\n\n\n\nTip\n\n\n\nSince eigenvectors can be same values, but with opposite signs, we compare the absolute values.\n\n\n\nnp.allclose(np.abs(V[:, :5]), np.abs(eigen_vecs[:, :5]))\n\nTrue\n\n\n\n\nShow top 5 eigenfaces\n\nshow_pc_images(V[:, :5])"
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them.",
+    "href": "projects/nbs/eigenface.html#projecting-3-persons-faces-data-down-to-2-dimensions-and-plot-them.",
+    "title": "EigenFace",
+    "section": "Projecting 3 persons’ faces data down to 2 dimensions and plot them.",
+    "text": "Projecting 3 persons’ faces data down to 2 dimensions and plot them.\n\nT = X_train[:7*3, :] @ V[:, :2]\nT.shape\n\n(21, 2)\n\n\n\ny = y_train[:7*3].reshape(-1, 1)\ny.shape\n\n(21, 1)\n\n\n\ndata_2d = pd.DataFrame(data=np.concatenate((T, y), axis=1), columns=['pc1', 'pc2', 'person'])\ndata_2d.head()\n\n\n\n\n\n  \n    \n      \n      pc1\n      pc2\n      person\n    \n  \n  \n    \n      0\n      -4907.496730\n      458.054067\n      1.0\n    \n    \n      1\n      -4344.197376\n      1289.734627\n      1.0\n    \n    \n      2\n      -4775.345055\n      577.090674\n      1.0\n    \n    \n      3\n      -4492.115417\n      -930.775823\n      1.0\n    \n    \n      4\n      -4639.398032\n      840.018975\n      1.0\n    \n  \n\n\n\n\n\nfig, ax = plt.subplots(figsize=(8, 5))\nsns.scatterplot(data=data_2d, x='pc1', y='pc2', hue='person', palette=['blue', 'red', 'green'], ax=ax)\nplt.show()\n\n\n\n\nThe above plot shows that the data is separable."
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#explained-variance-ratio",
+    "href": "projects/nbs/eigenface.html#explained-variance-ratio",
+    "title": "EigenFace",
+    "section": "Explained variance ratio",
+    "text": "Explained variance ratio\n\ns.shape\n\n(280,)\n\n\n\ns_norm = s / s.sum()\nplt.plot(np.cumsum(s_norm))\nplt.xlabel('singular values')\nplt.ylabel('cumulative sum')\nplt.xlim(0, 280)\nplt.ylim(0, 1)\nplt.show()"
+  },
+  {
+    "objectID": "projects/nbs/eigenface.html#reconstruct-face-from-top-principle-components",
+    "href": "projects/nbs/eigenface.html#reconstruct-face-from-top-principle-components",
+    "title": "EigenFace",
+    "section": "Reconstruct face from top principle components",
+    "text": "Reconstruct face from top principle components\n\nOriginal face\n\npicked_face = X_train[0]\nshow_image(picked_face)\n\n\n\n\n\n\nReconstruct_face method 1\n\nk = 20 # the kth eigenvector\n\n\nreconstruct_face1 = (picked_face - mean) @ eigen_vecs[:, :k] @ eigen_vecs[:, :k].T + mean\nshow_image(reconstruct_face1)\n\n\n\n\n\n\nReconstruct_face method 2\n\nS = np.diag(s)\nS.shape\n\n(280, 280)\n\n\n\nreconstruct_face2 = U[0, :k] @ S[:k, :k] @ (V.T)[:k, :] + mean\nreconstruct_face2.shape\n\n(1024,)\n\n\n\nshow_image(reconstruct_face2)\n\n\n\n\n\n\nConfirm the two reconstruct_faces are the same\n\nnp.allclose(reconstruct_face1, reconstruct_face2)\n\nTrue"
   },
   {
     "objectID": "about.html",
