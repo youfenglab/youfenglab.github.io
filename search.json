@@ -88,7 +88,7 @@
     "href": "tils/index.html",
     "title": "TILs",
     "section": "",
-    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
+    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 21, 2022\n\n\nRow and column in Spark\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "tils/nbs/image-data-augmentation.html",
@@ -208,6 +208,20 @@
     "title": "Find the path of a Linux command",
     "section": "4. whereis command",
     "text": "4. whereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
+  },
+  {
+    "objectID": "tils/nbs/column-and-row-in-spark.html",
+    "href": "tils/nbs/column-and-row-in-spark.html",
+    "title": "Row and column in Spark",
+    "section": "",
+    "text": "from pyspark.sql import SparkSession\nfrom pyspark.sql import Row, Column\nfrom pyspark.sql.functions import expr\n\nspark = SparkSession.builder.appName('col-row').getOrCreate()\n\n\nrows = [Row('Brooke', 20), Row('Denny', 31), Row('Jules', 30), Row('TD', 35), Row('Brooke', 25)]\nrows\n\n[<Row('Brooke', 20)>,\n <Row('Denny', 31)>,\n <Row('Jules', 30)>,\n <Row('TD', 35)>,\n <Row('Brooke', 25)>]\n\n\n\ndf = spark.createDataFrame(rows, ['name', 'age'])\ndf.show()\n\n[Stage 0:>                                                          (0 + 1) / 1]\n\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n| Denny| 31|\n| Jules| 30|\n|    TD| 35|\n|Brooke| 25|\n+------+---+"
+  },
+  {
+    "objectID": "tils/nbs/column-and-row-in-spark.html#column",
+    "href": "tils/nbs/column-and-row-in-spark.html#column",
+    "title": "Row and column in Spark",
+    "section": "Column",
+    "text": "Column\n\nnew_col = expr(\"age + 3\")\nnew_col\n\nColumn<'(age + 3)'>\n\n\n\ndf.withColumn('age after 3 years', new_col).show()\n\n+------+---+-----------------+\n|  name|age|age after 3 years|\n+------+---+-----------------+\n|Brooke| 20|               23|\n| Denny| 31|               34|\n| Jules| 30|               33|\n|    TD| 35|               38|\n|Brooke| 25|               28|\n+------+---+-----------------+\n\n\n\n\ndf.age\n\nColumn<'age'>\n\n\n\ndf.withColumn('age after 5 years', df.age + 5).show()\n\n+------+---+-----------------+\n|  name|age|age after 5 years|\n+------+---+-----------------+\n|Brooke| 20|               25|\n| Denny| 31|               36|\n| Jules| 30|               35|\n|    TD| 35|               40|\n|Brooke| 25|               30|\n+------+---+-----------------+\n\n\n\n\nspark.stop()"
   },
   {
     "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",

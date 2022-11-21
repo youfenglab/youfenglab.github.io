@@ -26,6 +26,7 @@
   {
     "listing": "/tils/index.html",
     "items": [
+      "/tils/nbs/column-and-row-in-spark.html",
       "/tils/nbs/expressivity-and-composability-of-spark.html",
       "/tils/nbs/define-a-spark-schema.html",
       "/tils/nbs/find-path-of-a-linux-command.html",
