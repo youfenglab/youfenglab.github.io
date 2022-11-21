@@ -4,8 +4,8 @@
     "items": [
       "/posts/nbs/activation_functions.html",
       "/posts/nbs/handle_missing_data.html",
-      "/posts/nbs/connect_db.html",
-      "/posts/nbs/hf_datasets.html"
+      "/posts/nbs/hf_datasets.html",
+      "/posts/nbs/connect_db.html"
     ]
   },
   {
@@ -19,8 +19,8 @@
       "/projects/nbs/powerbi.html",
       "/posts/nbs/activation_functions.html",
       "/posts/nbs/handle_missing_data.html",
-      "/posts/nbs/connect_db.html",
-      "/posts/nbs/hf_datasets.html"
+      "/posts/nbs/hf_datasets.html",
+      "/posts/nbs/connect_db.html"
     ]
   },
   {
