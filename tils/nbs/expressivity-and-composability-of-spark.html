@@ -196,8 +196,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#with-low-level-rdd-api" id="toc-with-low-level-rdd-api" class="nav-link active" data-scroll-target="#with-low-level-rdd-api">With low-level RDD API</a></li>
-  <li><a href="#with-high-level-dsl-operates-and-dataframe-api" id="toc-with-high-level-dsl-operates-and-dataframe-api" class="nav-link" data-scroll-target="#with-high-level-dsl-operates-and-dataframe-api">With high-level DSL operates and DataFrame API</a></li>
+  <li><a href="#with-low-level-rdd-api-unstructured" id="toc-with-low-level-rdd-api-unstructured" class="nav-link active" data-scroll-target="#with-low-level-rdd-api-unstructured">With low-level RDD API (unstructured)</a></li>
+  <li><a href="#with-high-level-dsl-operates-and-dataframe-api-structured" id="toc-with-high-level-dsl-operates-and-dataframe-api-structured" class="nav-link" data-scroll-target="#with-high-level-dsl-operates-and-dataframe-api-structured">With high-level DSL operates and DataFrame API (structured)</a></li>
   </ul>
 </nav>
     </div>
@@ -236,8 +236,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="with-low-level-rdd-api" class="level2">
-<h2 class="anchored" data-anchor-id="with-low-level-rdd-api">With low-level RDD API</h2>
+<section id="with-low-level-rdd-api-unstructured" class="level2">
+<h2 class="anchored" data-anchor-id="with-low-level-rdd-api-unstructured">With low-level RDD API (unstructured)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark <span class="im">import</span> SparkContext</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -287,8 +287,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sc.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="with-high-level-dsl-operates-and-dataframe-api" class="level2">
-<h2 class="anchored" data-anchor-id="with-high-level-dsl-operates-and-dataframe-api">With high-level DSL operates and DataFrame API</h2>
+<section id="with-high-level-dsl-operates-and-dataframe-api-structured" class="level2">
+<h2 class="anchored" data-anchor-id="with-high-level-dsl-operates-and-dataframe-api-structured">With high-level DSL operates and DataFrame API (structured)</h2>
+<blockquote class="blockquote">
+<p>DSL: domain specific language</p>
+</blockquote>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> avg</span>
