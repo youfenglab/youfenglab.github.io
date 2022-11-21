@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Youfeng Zhou">
-<meta name="dcterms.date" content="2022-11-15">
+<meta name="dcterms.date" content="2022-11-21">
 
-<title>Youfeng Zhou - Set up spark in Jupyter Notebook</title>
+<title>Youfeng Zhou - Expressivity and composability of Spark</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,9 +127,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Youfeng Zhou - Set up spark in Jupyter Notebook">
+<meta property="og:title" content="Youfeng Zhou - Expressivity and composability of Spark">
 <meta property="og:site-name" content="Youfeng Zhou">
-<meta name="twitter:title" content="Youfeng Zhou - Set up spark in Jupyter Notebook">
+<meta name="twitter:title" content="Youfeng Zhou - Expressivity and composability of Spark">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -196,8 +196,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#using-the-low-level-rdd-api" id="toc-using-the-low-level-rdd-api" class="nav-link active" data-scroll-target="#using-the-low-level-rdd-api">Using the low-level RDD API</a></li>
-  <li><a href="#using-high-level-dsl-operators-and-the-dataframe-api" id="toc-using-high-level-dsl-operators-and-the-dataframe-api" class="nav-link" data-scroll-target="#using-high-level-dsl-operators-and-the-dataframe-api">Using high-level DSL operators and the DataFrame API</a></li>
+  <li><a href="#with-low-level-rdd-api" id="toc-with-low-level-rdd-api" class="nav-link active" data-scroll-target="#with-low-level-rdd-api">With low-level RDD API</a></li>
+  <li><a href="#with-high-level-dsl-operates-and-dataframe-api" id="toc-with-high-level-dsl-operates-and-dataframe-api" class="nav-link" data-scroll-target="#with-high-level-dsl-operates-and-dataframe-api">With high-level DSL operates and DataFrame API</a></li>
   </ul>
 </nav>
     </div>
@@ -206,10 +206,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Set up spark in Jupyter Notebook</h1>
+<h1 class="title">Expressivity and composability of Spark</h1>
   <div class="quarto-categories">
     <div class="quarto-category">spark</div>
-    <div class="quarto-category">jupyter notebook</div>
   </div>
   </div>
 
@@ -227,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 15, 2022</p>
+      <p class="date">November 21, 2022</p>
     </div>
   </div>
   
@@ -237,27 +236,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="using-the-low-level-rdd-api" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-low-level-rdd-api">Using the low-level RDD API</h2>
+<section id="with-low-level-rdd-api" class="level2">
+<h2 class="anchored" data-anchor-id="with-low-level-rdd-api">With low-level RDD API</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark <span class="im">import</span> SparkContext, SparkConf</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark <span class="im">import</span> SparkContext</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>conf <span class="op">=</span> SparkConf().setMaster(<span class="st">'local'</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> SparkContext(conf<span class="op">=</span>conf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> SparkContext(<span class="st">'local'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sc.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataRDD <span class="op">=</span> sc.parallelize([(<span class="st">'Brooke'</span>, <span class="dv">20</span>), (<span class="st">'Denny'</span>, <span class="dv">31</span>), (<span class="st">'Jules'</span>, <span class="dv">30</span>), (<span class="st">'TD'</span>, <span class="dv">35</span>), (<span class="st">'Brooke'</span>, <span class="dv">25</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dataRDD.first()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>('Brooke', 20)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dataRDD.collect() <span class="co"># only use when the dataset is small</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mapedRDD <span class="op">=</span> dataRDD.<span class="bu">map</span>(<span class="kw">lambda</span> x: (x[<span class="dv">0</span>], (x[<span class="dv">1</span>], <span class="dv">1</span>)))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mapedRDD.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('Brooke', (20, 1)),
+ ('Denny', (31, 1)),
+ ('Jules', (30, 1)),
+ ('TD', (35, 1)),
+ ('Brooke', (25, 1))]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>reducedRDD <span class="op">=</span> mapedRDD.reduceByKey(<span class="kw">lambda</span> x, y: (x[<span class="dv">0</span>] <span class="op">+</span> y[<span class="dv">0</span>], x[<span class="dv">1</span>] <span class="op">+</span> y[<span class="dv">1</span>]))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>reducedRDD.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('Brooke', (45, 2)), ('Denny', (31, 1)), ('Jules', (30, 1)), ('TD', (35, 1))]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mapedRDD <span class="op">=</span> reducedRDD.<span class="bu">map</span>(<span class="kw">lambda</span> x: (x[<span class="dv">0</span>], x[<span class="dv">1</span>][<span class="dv">0</span>]<span class="op">/</span>x[<span class="dv">1</span>][<span class="dv">1</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mapedRDD.collect()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('Brooke', 22.5), ('Denny', 31.0), ('Jules', 30.0), ('TD', 35.0)]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sc.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="using-high-level-dsl-operators-and-the-dataframe-api" class="level2">
-<h2 class="anchored" data-anchor-id="using-high-level-dsl-operators-and-the-dataframe-api">Using high-level DSL operators and the DataFrame API</h2>
+<section id="with-high-level-dsl-operates-and-dataframe-api" class="level2">
+<h2 class="anchored" data-anchor-id="with-high-level-dsl-operates-and-dataframe-api">With high-level DSL operates and DataFrame API</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">'chapter2'</span>).getOrCreate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> avg</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">'AvgAges'</span>).getOrCreate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spark.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data_df <span class="op">=</span> spark.createDataFrame([(<span class="st">'Brooke'</span>, <span class="dv">20</span>), (<span class="st">'Denny'</span>, <span class="dv">31</span>), (<span class="st">'Jules'</span>, <span class="dv">30</span>), (<span class="st">'TD'</span>, <span class="dv">35</span>), (<span class="st">'Brooke'</span>, <span class="dv">25</span>)], </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                [<span class="st">'name'</span>, <span class="st">'age'</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data_df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+---+
+|  name|age|
++------+---+
+|Brooke| 20|
+| Denny| 31|
+| Jules| 30|
+|    TD| 35|
+|Brooke| 25|
++------+---+
+</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>avg_df <span class="op">=</span> data_df.groupBy(<span class="st">'name'</span>).agg(avg(<span class="st">'age'</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>avg_df.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+------+--------+
+|  name|avg(age)|
++------+--------+
+|Brooke|    22.5|
+| Jules|    30.0|
+|    TD|    35.0|
+| Denny|    31.0|
++------+--------+
+</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This version is far more expressive and simpler than the previous one.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>spark.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
