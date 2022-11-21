@@ -88,7 +88,14 @@
     "href": "tils/index.html",
     "title": "TILs",
     "section": "",
-    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 21, 2022\n\n\nRow and column in Spark\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
+    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 21, 2022\n\n\nCommon DataFrame operations\n\n\n\n\nNov 21, 2022\n\n\nRow and column in Spark\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "tils/nbs/common-dataframe-operations.html",
+    "href": "tils/nbs/common-dataframe-operations.html",
+    "title": "Common DataFrame operations",
+    "section": "",
+    "text": "Tip\n\n\n\nIf we don’t specify the schema, Spark can infer the schema from the data.\nHowever, for large datasets and files, it’s more efficient to define a schema than have Spark infer it.\n\n\n\n\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.types import *\n\nspark = SparkSession.builder.appName('CSV-Reader').getOrCreate()\n\n# In python, the syntax is as below.\ndf = spark.read.csv('csv_file_path', header=True, schema=csv_file_schema)\n\n\n\n\n\n\nImportant\n\n\n\ncsv_file_schema is defined before reading the file.\n\n\n\n\n\n\nSave as a parquet fileSave as a parquet table\n\n\nparquet_path = '...'\ndf.write.format(\"parquet\").save(parquet_path)\n\n\nparquet_table = '...'                                   # name of the table\ndf.write.format(\"parquet\").saveAsTable(parquet_table)\n\n\n\n\nSQL table will cover later\n\n\n\n\n# in Spark, projections are done with `select()` method,\n# while filters can be conducted using `filter()` or `where()` method.\n\nsub_df = df.select([columns list]).where(col(column name == 'some condition'))\nsub_df.show(5, truncate=False)\n\n\n\n\nRenamingAddingDropping\n\n\ndf.withColumnRenamed('name of current column', 'renamed column name')\n\n\ndf.withColumn('target column', 'new_column')\n\n\ndf.drop('columns needed to drop')\n\n\n\nMore details look at book Learning Spark\n\nspark.stop()"
   },
   {
     "objectID": "tils/nbs/image-data-augmentation.html",
@@ -221,7 +228,7 @@
     "href": "tils/nbs/column-and-row-in-spark.html#column",
     "title": "Row and column in Spark",
     "section": "Column",
-    "text": "Column\n\nnew_col = expr(\"age + 3\")\nnew_col\n\nColumn<'(age + 3)'>\n\n\n\ndf.withColumn('age after 3 years', new_col).show()\n\n+------+---+-----------------+\n|  name|age|age after 3 years|\n+------+---+-----------------+\n|Brooke| 20|               23|\n| Denny| 31|               34|\n| Jules| 30|               33|\n|    TD| 35|               38|\n|Brooke| 25|               28|\n+------+---+-----------------+\n\n\n\n\ndf.age\n\nColumn<'age'>\n\n\n\ndf.withColumn('age after 5 years', df.age + 5).show()\n\n+------+---+-----------------+\n|  name|age|age after 5 years|\n+------+---+-----------------+\n|Brooke| 20|               25|\n| Denny| 31|               36|\n| Jules| 30|               35|\n|    TD| 35|               40|\n|Brooke| 25|               30|\n+------+---+-----------------+\n\n\n\n\nspark.stop()"
+    "text": "Column\n\nnew_col = expr(\"age + 3\")\nnew_col\n\nColumn<'(age + 3)'>\n\n\n\ndf.withColumn('age after 3 years', new_col).show()\n\n+------+---+-----------------+\n|  name|age|age after 3 years|\n+------+---+-----------------+\n|Brooke| 20|               23|\n| Denny| 31|               34|\n| Jules| 30|               33|\n|    TD| 35|               38|\n|Brooke| 25|               28|\n+------+---+-----------------+\n\n\n\n\ndf.age\n\nColumn<'age'>\n\n\n\ndf.withColumn('age after 5 years', (df.age + 5)).show()\n\n+------+---+-----------------+\n|  name|age|age after 5 years|\n+------+---+-----------------+\n|Brooke| 20|               25|\n| Denny| 31|               36|\n| Jules| 30|               35|\n|    TD| 35|               40|\n|Brooke| 25|               30|\n+------+---+-----------------+\n\n\n\n\nspark.stop()"
   },
   {
     "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
