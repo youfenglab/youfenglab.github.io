@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Youfeng Zhou">
-<meta name="dcterms.date" content="2022-11-15">
+<meta name="dcterms.date" content="2022-11-22">
 
-<title>Youfeng Zhou - Set up spark in Jupyter Notebook</title>
+<title>Youfeng Zhou - The useage of python shutil module</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,9 +127,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Youfeng Zhou - Set up spark in Jupyter Notebook">
+<meta property="og:title" content="Youfeng Zhou - The useage of python shutil module">
 <meta property="og:site-name" content="Youfeng Zhou">
-<meta name="twitter:title" content="Youfeng Zhou - Set up spark in Jupyter Notebook">
+<meta name="twitter:title" content="Youfeng Zhou - The useage of python shutil module">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -196,8 +196,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#using-the-low-level-rdd-api" id="toc-using-the-low-level-rdd-api" class="nav-link active" data-scroll-target="#using-the-low-level-rdd-api">Using the low-level RDD API</a></li>
-  <li><a href="#using-high-level-dsl-operators-and-the-dataframe-api" id="toc-using-high-level-dsl-operators-and-the-dataframe-api" class="nav-link" data-scroll-target="#using-high-level-dsl-operators-and-the-dataframe-api">Using high-level DSL operators and the DataFrame API</a></li>
+  <li><a href="#copy-and-move-files-and-directories" id="toc-copy-and-move-files-and-directories" class="nav-link active" data-scroll-target="#copy-and-move-files-and-directories">Copy and move files and directories</a>
+  <ul class="collapse">
+  <li><a href="#copy-files" id="toc-copy-files" class="nav-link" data-scroll-target="#copy-files">Copy files</a></li>
+  <li><a href="#copy-files-but-preserve-metadata" id="toc-copy-files-but-preserve-metadata" class="nav-link" data-scroll-target="#copy-files-but-preserve-metadata">Copy files, but preserve metadata</a></li>
+  <li><a href="#copy-directory-tree" id="toc-copy-directory-tree" class="nav-link" data-scroll-target="#copy-directory-tree">Copy directory tree</a></li>
+  <li><a href="#move-files" id="toc-move-files" class="nav-link" data-scroll-target="#move-files">Move files</a></li>
+  </ul></li>
+  <li><a href="#create-and-unpack-archives" id="toc-create-and-unpack-archives" class="nav-link" data-scroll-target="#create-and-unpack-archives">Create and unpack archives</a>
+  <ul class="collapse">
+  <li><a href="#create-archives" id="toc-create-archives" class="nav-link" data-scroll-target="#create-archives">Create archives</a></li>
+  <li><a href="#unpack-archives" id="toc-unpack-archives" class="nav-link" data-scroll-target="#unpack-archives">unpack archives</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -206,10 +216,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Set up spark in Jupyter Notebook</h1>
+<h1 class="title">The useage of python shutil module</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">spark</div>
-    <div class="quarto-category">jupyter notebook</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">shutil</div>
   </div>
   </div>
 
@@ -227,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 15, 2022</p>
+      <p class="date">November 22, 2022</p>
     </div>
   </div>
   
@@ -237,30 +247,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="using-the-low-level-rdd-api" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-low-level-rdd-api">Using the low-level RDD API</h2>
+<section id="copy-and-move-files-and-directories" class="level2">
+<h2 class="anchored" data-anchor-id="copy-and-move-files-and-directories">Copy and move files and directories</h2>
+<section id="copy-files" class="level3">
+<h3 class="anchored" data-anchor-id="copy-files">Copy files</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shutil.copy(src, dst)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="copy-files-but-preserve-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="copy-files-but-preserve-metadata">Copy files, but preserve metadata</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>shutil.copy2(src, dst)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="copy-directory-tree" class="level3">
+<h3 class="anchored" data-anchor-id="copy-directory-tree">Copy directory tree</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>shutil.copytree(src, dst)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="move-files" class="level3">
+<h3 class="anchored" data-anchor-id="move-files">Move files</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shutil.move(src, dst)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="create-and-unpack-archives" class="level2">
+<h2 class="anchored" data-anchor-id="create-and-unpack-archives">Create and unpack archives</h2>
+<section id="create-archives" class="level3">
+<h3 class="anchored" data-anchor-id="create-archives">Create archives</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shutil.make_archive(archive_name,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'zip'</span>,  <span class="co"># the desired output format</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    root_dir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark <span class="im">import</span> SparkContext, SparkConf</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>conf <span class="op">=</span> SparkConf().setMaster(<span class="st">'local'</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> SparkContext(conf<span class="op">=</span>conf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a list of supported archive formats</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>shutil.get_archive_formats()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[('bztar', "bzip2'ed tar-file"),
+ ('gztar', "gzip'ed tar-file"),
+ ('tar', 'uncompressed tar file'),
+ ('xztar', "xz'ed tar-file"),
+ ('zip', 'ZIP file')]</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sc.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="using-high-level-dsl-operators-and-the-dataframe-api" class="level2">
-<h2 class="anchored" data-anchor-id="using-high-level-dsl-operators-and-the-dataframe-api">Using high-level DSL operators and the DataFrame API</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.appName(<span class="st">'chapter2'</span>).getOrCreate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>spark.stop()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="unpack-archives" class="level3">
+<h3 class="anchored" data-anchor-id="unpack-archives">unpack archives</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>shutil.unpack_archive(archive_name, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                      extract_dir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
