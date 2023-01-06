@@ -1,41 +1,13 @@
 [
   {
-    "listing": "/tils/index.html",
-    "items": [
-      "/tils/nbs/the-useage-of-shutil-module.html",
-      "/tils/nbs/expressivity-and-composability-of-spark.html",
-      "/tils/nbs/column-and-row-in-spark.html",
-      "/tils/nbs/common-dataframe-operations.html",
-      "/tils/nbs/define-a-spark-schema.html",
-      "/tils/nbs/find-path-of-a-linux-command.html",
-      "/tils/nbs/setup-spark-in-jupyter-notebook.html",
-      "/tils/nbs/image-data-augmentation.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/projects/nbs/extract_dataframe_from_txt_file.html",
-      "/projects/nbs/generate_names.html",
-      "/projects/nbs/eigenface.html",
-      "/projects/nbs/word_clouds.html",
-      "/projects/nbs/powerbi.html",
-      "/projects/nbs/house_price_prediction.html",
-      "/posts/nbs/activation_functions.html",
-      "/posts/nbs/handle_missing_data.html",
-      "/posts/nbs/hf_datasets.html",
-      "/posts/nbs/connect_db.html"
-    ]
-  },
-  {
     "listing": "/projects/index.html",
     "items": [
       "/projects/nbs/extract_dataframe_from_txt_file.html",
       "/projects/nbs/generate_names.html",
       "/projects/nbs/eigenface.html",
-      "/projects/nbs/word_clouds.html",
+      "/projects/nbs/house_price_prediction.html",
       "/projects/nbs/powerbi.html",
-      "/projects/nbs/house_price_prediction.html"
+      "/projects/nbs/word_clouds.html"
     ]
   },
   {
@@ -45,6 +17,34 @@
       "/posts/nbs/handle_missing_data.html",
       "/posts/nbs/hf_datasets.html",
       "/posts/nbs/connect_db.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/projects/nbs/extract_dataframe_from_txt_file.html",
+      "/projects/nbs/generate_names.html",
+      "/projects/nbs/eigenface.html",
+      "/projects/nbs/house_price_prediction.html",
+      "/projects/nbs/powerbi.html",
+      "/projects/nbs/word_clouds.html",
+      "/posts/nbs/activation_functions.html",
+      "/posts/nbs/handle_missing_data.html",
+      "/posts/nbs/hf_datasets.html",
+      "/posts/nbs/connect_db.html"
+    ]
+  },
+  {
+    "listing": "/tils/index.html",
+    "items": [
+      "/tils/nbs/the-useage-of-shutil-module.html",
+      "/tils/nbs/expressivity-and-composability-of-spark.html",
+      "/tils/nbs/common-dataframe-operations.html",
+      "/tils/nbs/column-and-row-in-spark.html",
+      "/tils/nbs/define-a-spark-schema.html",
+      "/tils/nbs/find-path-of-a-linux-command.html",
+      "/tils/nbs/setup-spark-in-jupyter-notebook.html",
+      "/tils/nbs/image-data-augmentation.html"
     ]
   }
 ]

@@ -4,203 +4,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Hi 👋 I am Youfeng,\na data analysis and data science learner.\nI’m here to share my study,\nand hope to connect with people from the data engineering and machine learning community.\nPlease reach me on Twitter.\nHappy reading and see you around! 😃"
-  },
-  {
-    "objectID": "tils/nbs/define-a-spark-schema.html",
-    "href": "tils/nbs/define-a-spark-schema.html",
-    "title": "Define a spark schema",
-    "section": "",
-    "text": "from pyspark.sql.types import *\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('Simple-table').getOrCreate()"
-  },
-  {
-    "objectID": "tils/nbs/define-a-spark-schema.html#define-it-programmatically",
-    "href": "tils/nbs/define-a-spark-schema.html#define-it-programmatically",
-    "title": "Define a spark schema",
-    "section": "Define it programmatically",
-    "text": "Define it programmatically\n\nschema = StructType([StructField(\"first name\", StringType(), False), \n                     StructField(\"last name\", StringType(), False), \n                     StructField(\"weight\", IntegerType(), False)])\n\n\nschema\n\nStructType([StructField('first name', StringType(), False), StructField('last name', StringType(), False), StructField('weight', IntegerType(), False)])\n\n\nFalse indicate whether the field can be null (None) or not.\n\ndata = [['Jake', 'Z', 60], ['Tom', 'X', 50]]\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first name|last name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+"
-  },
-  {
-    "objectID": "tils/nbs/define-a-spark-schema.html#define-it-using-ddl",
-    "href": "tils/nbs/define-a-spark-schema.html#define-it-using-ddl",
-    "title": "Define a spark schema",
-    "section": "Define it using DDL",
-    "text": "Define it using DDL\nThis method is much simper.\n\nschema = \"first_name STRING, last_name STRING, weight INT\"\n\n\nschema\n\n'first_name STRING, last_name STRING, weight INT'\n\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first_name|last_name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nA disadvantage of this method is we cannot put space or - between words."
-  },
-  {
-    "objectID": "tils/nbs/define-a-spark-schema.html#stop-spark-session",
-    "href": "tils/nbs/define-a-spark-schema.html#stop-spark-session",
-    "title": "Define a spark schema",
-    "section": "Stop spark session",
-    "text": "Stop spark session\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/the-useage-of-shutil-module.html",
-    "href": "tils/nbs/the-useage-of-shutil-module.html",
-    "title": "The useage of python shutil module",
-    "section": "",
-    "text": "shutil.copy(src, dst)\n\n\n\nshutil.copy2(src, dst)\n\n\n\nshutil.copytree(src, dst)\n\n\n\nshutil.move(src, dst)"
-  },
-  {
-    "objectID": "tils/nbs/the-useage-of-shutil-module.html#create-and-unpack-archives",
-    "href": "tils/nbs/the-useage-of-shutil-module.html#create-and-unpack-archives",
-    "title": "The useage of python shutil module",
-    "section": "Create and unpack archives",
-    "text": "Create and unpack archives\n\nCreate archives\nshutil.make_archive(archive_name,\n                    'zip',  # the desired output format\n                    root_dir)\n\n# Get a list of supported archive formats\nshutil.get_archive_formats()\n\n[('bztar', \"bzip2'ed tar-file\"),\n ('gztar', \"gzip'ed tar-file\"),\n ('tar', 'uncompressed tar file'),\n ('xztar', \"xz'ed tar-file\"),\n ('zip', 'ZIP file')]\n\n\n\n\nunpack archives\nshutil.unpack_archive(archive_name, \n                      extract_dir)"
-  },
-  {
-    "objectID": "tils/nbs/expressivity-and-composability-of-spark.html",
-    "href": "tils/nbs/expressivity-and-composability-of-spark.html",
-    "title": "Expressivity and composability of Spark",
-    "section": "",
-    "text": "from pyspark import SparkContext\n\nsc = SparkContext('local')\n\n\ndataRDD = sc.parallelize([('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)])\n\n\ndataRDD.first()\n\n('Brooke', 20)\n\n\n\ndataRDD.collect() # only use when the dataset is small\n\n[('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)]\n\n\n\ndataRDD.take(2) # use `take(n)` to get the first n rows\n\n[('Brooke', 20), ('Denny', 31)]\n\n\n\nmapedRDD = dataRDD.map(lambda x: (x[0], (x[1], 1)))\nmapedRDD.collect()\n\n[('Brooke', (20, 1)),\n ('Denny', (31, 1)),\n ('Jules', (30, 1)),\n ('TD', (35, 1)),\n ('Brooke', (25, 1))]\n\n\n\nreducedRDD = mapedRDD.reduceByKey(lambda x, y: (x[0] + y[0], x[1] + y[1]))\nreducedRDD.collect()\n\n[('Brooke', (45, 2)), ('Denny', (31, 1)), ('Jules', (30, 1)), ('TD', (35, 1))]\n\n\n\nmapedRDD = reducedRDD.map(lambda x: (x[0], x[1][0]/x[1][1]))\nmapedRDD.collect()\n\n[('Brooke', 22.5), ('Denny', 31.0), ('Jules', 30.0), ('TD', 35.0)]\n\n\n\nsc.stop()"
-  },
-  {
-    "objectID": "tils/nbs/expressivity-and-composability-of-spark.html#with-high-level-dsl-operates-and-dataframe-api-structured",
-    "href": "tils/nbs/expressivity-and-composability-of-spark.html#with-high-level-dsl-operates-and-dataframe-api-structured",
-    "title": "Expressivity and composability of Spark",
-    "section": "With high-level DSL operates and DataFrame API (structured)",
-    "text": "With high-level DSL operates and DataFrame API (structured)\n\nDSL: domain specific language\n\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\n\nspark = SparkSession.builder.appName('AvgAges').getOrCreate()\n\n\ndata_df = spark.createDataFrame([('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)], \n                                ['name', 'age'])\ndata_df.show()\n\n[Stage 0:>                                                          (0 + 1) / 1]                                                                                \n\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n| Denny| 31|\n| Jules| 30|\n|    TD| 35|\n|Brooke| 25|\n+------+---+\n\n\n\n\ndata_df.show(1)\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n+------+---+\nonly showing top 1 row\n\n\n\n\ndata_df.take(2) # Get the first 2 rows\n\n[Row(name='Brooke', age=20), Row(name='Denny', age=31)]\n\n\n\ndata_df.tail(2) # Get the last 3 rows\n\n[Row(name='TD', age=35), Row(name='Brooke', age=25)]\n\n\n\navg_df = data_df.groupBy('name').agg(avg('age'))\navg_df.show()\n\n+------+--------+\n|  name|avg(age)|\n+------+--------+\n|Brooke|    22.5|\n| Denny|    31.0|\n| Jules|    30.0|\n|    TD|    35.0|\n+------+--------+\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThis version is far more expressive and simpler than the previous one.\n\n\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html",
-    "href": "tils/nbs/find-path-of-a-linux-command.html",
-    "title": "Find the path of a Linux command",
-    "section": "",
-    "text": "Suppose we want to find the path of the command spark-submit in terminal, we have 4 ways to do it."
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html#which-command",
-    "href": "tils/nbs/find-path-of-a-linux-command.html#which-command",
-    "title": "Find the path of a Linux command",
-    "section": "1. which command",
-    "text": "1. which command\n\n!which spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\nWith a parameter -a will print all matching paths. In this case, there is only one.\n\n!which -a spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit"
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html#command-command",
-    "href": "tils/nbs/find-path-of-a-linux-command.html#command-command",
-    "title": "Find the path of a Linux command",
-    "section": "2. command command",
-    "text": "2. command command\n\n!command -v spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n!command -V spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWe must pass the parameter -v or -V, otherwise, it will run the command."
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html#type-command",
-    "href": "tils/nbs/find-path-of-a-linux-command.html#type-command",
-    "title": "Find the path of a Linux command",
-    "section": "3. type command",
-    "text": "3. type command\nShow the path\n\n!type -p spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition\n\n!type spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition, excutable type, and path\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit"
-  },
-  {
-    "objectID": "tils/nbs/find-path-of-a-linux-command.html#whereis-command",
-    "href": "tils/nbs/find-path-of-a-linux-command.html#whereis-command",
-    "title": "Find the path of a Linux command",
-    "section": "4. whereis command",
-    "text": "4. whereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
-  },
-  {
-    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
-    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html",
-    "title": "Set up spark in Jupyter Notebook",
-    "section": "",
-    "text": "from pyspark import SparkContext, SparkConf\n\nconf = SparkConf().setMaster('local')\nsc = SparkContext(conf=conf)\n\n\nsc.stop()"
-  },
-  {
-    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html#using-high-level-dsl-operators-and-the-dataframe-api",
-    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html#using-high-level-dsl-operators-and-the-dataframe-api",
-    "title": "Set up spark in Jupyter Notebook",
-    "section": "Using high-level DSL operators and the DataFrame API",
-    "text": "Using high-level DSL operators and the DataFrame API\n\nfrom pyspark.sql import SparkSession\n\nspark = SparkSession.builder.appName('chapter2').getOrCreate()\n\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/column-and-row-in-spark.html",
-    "href": "tils/nbs/column-and-row-in-spark.html",
-    "title": "Row and column in Spark",
-    "section": "",
-    "text": "from pyspark.sql import SparkSession\nfrom pyspark.sql import Row, Column\nfrom pyspark.sql.functions import expr\n\nspark = SparkSession.builder.appName('col-row').getOrCreate()\n\n\nrows = [Row('Brooke', 20), Row('Denny', 31), Row('Jules', 30), Row('TD', 35), Row('Brooke', 25)]\nrows\n\n[<Row('Brooke', 20)>,\n <Row('Denny', 31)>,\n <Row('Jules', 30)>,\n <Row('TD', 35)>,\n <Row('Brooke', 25)>]\n\n\n\ndf = spark.createDataFrame(rows, ['name', 'age'])\ndf.show()\n\n[Stage 0:>                                                          (0 + 1) / 1]\n\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n| Denny| 31|\n| Jules| 30|\n|    TD| 35|\n|Brooke| 25|\n+------+---+"
-  },
-  {
-    "objectID": "tils/nbs/column-and-row-in-spark.html#column",
-    "href": "tils/nbs/column-and-row-in-spark.html#column",
-    "title": "Row and column in Spark",
-    "section": "Column",
-    "text": "Column\n\nnew_col = expr(\"age + 3\")\nnew_col\n\nColumn<'(age + 3)'>\n\n\n\ndf.withColumn('age after 3 years', new_col).show()\n\n+------+---+-----------------+\n|  name|age|age after 3 years|\n+------+---+-----------------+\n|Brooke| 20|               23|\n| Denny| 31|               34|\n| Jules| 30|               33|\n|    TD| 35|               38|\n|Brooke| 25|               28|\n+------+---+-----------------+\n\n\n\n\ndf.age\n\nColumn<'age'>\n\n\n\ndf.withColumn('age after 5 years', (df.age + 5)).show()\n\n+------+---+-----------------+\n|  name|age|age after 5 years|\n+------+---+-----------------+\n|Brooke| 20|               25|\n| Denny| 31|               36|\n| Jules| 30|               35|\n|    TD| 35|               40|\n|Brooke| 25|               30|\n+------+---+-----------------+\n\n\n\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html",
-    "href": "tils/nbs/image-data-augmentation.html",
-    "title": "Image data augmentation",
-    "section": "",
-    "text": "This notebook will show the common methods used for preparing image data for vision models in PyTorch."
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#load-an-original-image",
-    "href": "tils/nbs/image-data-augmentation.html#load-an-original-image",
-    "title": "Image data augmentation",
-    "section": "Load an original image",
-    "text": "Load an original image\n\nimg = Image.open('images/cat.jpeg')\nimg"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#convert-the-image-to-tensor",
-    "href": "tils/nbs/image-data-augmentation.html#convert-the-image-to-tensor",
-    "title": "Image data augmentation",
-    "section": "Convert the image to Tensor",
-    "text": "Convert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\nFrom above, we know that the image size is 1199 * 1200."
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#resize-the-image",
-    "href": "tils/nbs/image-data-augmentation.html#resize-the-image",
-    "title": "Image data augmentation",
-    "section": "Resize the image",
-    "text": "Resize the image\nHere we resize the image to size 224 \\(\\times\\) 224.\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#flip-an-image",
-    "href": "tils/nbs/image-data-augmentation.html#flip-an-image",
-    "title": "Image data augmentation",
-    "section": "Flip an image",
-    "text": "Flip an image\n\n1. Flip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\n2. Flip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#change-brightness-contrast-saturation-and-hue-of-an-image",
-    "href": "tils/nbs/image-data-augmentation.html#change-brightness-contrast-saturation-and-hue-of-an-image",
-    "title": "Image data augmentation",
-    "section": "Change brightness, contrast, saturation and hue of an image",
-    "text": "Change brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#turn-an-image-grayscale",
-    "href": "tils/nbs/image-data-augmentation.html#turn-an-image-grayscale",
-    "title": "Image data augmentation",
-    "section": "Turn an image grayscale",
-    "text": "Turn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)"
-  },
-  {
-    "objectID": "tils/nbs/image-data-augmentation.html#crop-an-image",
-    "href": "tils/nbs/image-data-augmentation.html#crop-an-image",
-    "title": "Image data augmentation",
-    "section": "Crop an image",
-    "text": "Crop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
-  },
-  {
-    "objectID": "tils/nbs/common-dataframe-operations.html",
-    "href": "tils/nbs/common-dataframe-operations.html",
-    "title": "Common DataFrame operations",
-    "section": "",
-    "text": "Tip\n\n\n\nIf we don’t specify the schema, Spark can infer the schema from the data.\nHowever, for large datasets and files, it’s more efficient to define a schema than have Spark infer it.\n\n\n\n\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.types import *\n\nspark = SparkSession.builder.appName('CSV-Reader').getOrCreate()\n\n# In python, the syntax is as below.\ndf = spark.read.csv('csv_file_path', header=True, schema=csv_file_schema)\n\n\n\n\n\n\nImportant\n\n\n\ncsv_file_schema is defined before reading the file.\n\n\n\n\n\n\nSave as a parquet fileSave as a parquet table\n\n\nparquet_path = '...'\ndf.write.format(\"parquet\").save(parquet_path)\n\n\nparquet_table = '...'                                   # name of the table\ndf.write.format(\"parquet\").saveAsTable(parquet_table)\n\n\n\n\nSQL table will cover later\n\n\n\n\n# in Spark, projections are done with `select()` method,\n# while filters can be conducted using `filter()` or `where()` method.\n\nsub_df = df.select([columns list]).where(col(column name == 'some condition'))\nsub_df.show(5, truncate=False)\n\n\n\n\nRenamingAddingDropping\n\n\ndf.withColumnRenamed('name of current column', 'renamed column name')\n\n\ndf.withColumn('target column', 'new_column')\n\n\ndf.drop('columns needed to drop')\n\n\n\nMore details look at book Learning Spark\n\nspark.stop()"
-  },
-  {
-    "objectID": "tils/index.html",
-    "href": "tils/index.html",
-    "title": "TILs",
-    "section": "",
-    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 22, 2022\n\n\nThe useage of python shutil module\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 21, 2022\n\n\nRow and column in Spark\n\n\n\n\nNov 21, 2022\n\n\nCommon DataFrame operations\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "My latest projects",
-    "section": "",
-    "text": "My latest projects\n\n\n\n\n\n\n\n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nPCA\n\n\nSVD\n\n\n\nThis notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.\n\n\n\nMay 26, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n More projects\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items\n\n\n More posts"
+    "text": "Hi 👋 I am Youfeng,\na Python developer, data analysis and data science learner.\nI’m here to share my study,\nand hope to connect with people from the data engineering and machine learning community.\nPlease reach me on Twitter.\nHappy reading and see you around! 😃"
   },
   {
     "objectID": "projects/nbs/generate_names.html",
@@ -222,6 +26,13 @@
     "title": "Generate English name",
     "section": "Read more",
     "text": "Read more\n Project website    GitHub repo"
+  },
+  {
+    "objectID": "projects/nbs/house_price_prediction.html",
+    "href": "projects/nbs/house_price_prediction.html",
+    "title": "House Price Prediction",
+    "section": "",
+    "text": "from fastai.tabular.all import *"
   },
   {
     "objectID": "projects/nbs/eigenface.html",
@@ -336,18 +147,11 @@
     "text": "Create pandas dataframe and save them as csv files.\n\nfor cat_var in cat_vars:\n    cat_df = cat_desc(desc, cat_var)\n    cat_df.to_csv(path/f'{cat_var}.csv', index=False)\n\n\n!ls {path}\n\nAlley.csv             Foundation.csv        MiscFeature.csv\nBldgType.csv          Functional.csv        Neighborhood.csv\nBsmtCond.csv          GarageCond.csv        OverallCond.csv\nBsmtExposure.csv      GarageFinish.csv      OverallQual.csv\nBsmtFinType1.csv      GarageQual.csv        PavedDrive.csv\nBsmtFinType2.csv      GarageType.csv        PoolQC.csv\nBsmtQual.csv          Heating.csv           RoofMatl.csv\nCentralAir.csv        HeatingQC.csv         RoofStyle.csv\nCondition1.csv        HouseStyle.csv        SaleCondition.csv\nCondition2.csv        KitchenQual.csv       SaleType.csv\nElectrical.csv        LandContour.csv       Street.csv\nExterCond.csv         LandSlope.csv         Utilities.csv\nExterQual.csv         LotConfig.csv         data_description.txt\nExterior1st.csv       LotShape.csv          sample_submission.csv\nExterior2nd.csv       MSSubClass.csv        test.csv\nFence.csv             MSZoning.csv          train.csv\nFireplaceQu.csv       MasVnrType.csv        vars_desc.csv"
   },
   {
-    "objectID": "projects/nbs/house_price_prediction.html",
-    "href": "projects/nbs/house_price_prediction.html",
-    "title": "House Price Prediction",
-    "section": "",
-    "text": "from fastai.tabular.all import *"
-  },
-  {
     "objectID": "projects/index.html",
     "href": "projects/index.html",
     "title": "Projects",
     "section": "",
-    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nPCA\n\n\nSVD\n\n\n\nThis notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.\n\n\n\nMay 26, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Extracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nPCA\n\n\nSVD\n\n\n\nThis notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.\n\n\n\nMay 26, 2022\n\n\n\n\n\n\n\n\n\n\n\nHouse Price Prediction\n\n\n\nmachine learning\n\n\n\nThis notebook will\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nPower BI\n\n\n\ndata visualization\n\n\n\nThis notebook will show how to use Power BI\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\n\n\n\nWords Clouds\n\n\n\nexploratory data analysis\n\n\n\nThis notebook will show how to create word clouds in python\n\n\n\nMay 23, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/nbs/connect_db.html",
@@ -378,6 +182,13 @@
     "text": "Get information about the schema of each table\n\ntables = db_tables['Tables_in_farmers_market']\n\nfor table in tables:\n    desc = pd.read_sql('describe {}'.format(table), db)\n    print('*'*30, table, '*'*30)\n    print(desc, '\\n')\n\n****************************** booth ******************************\n               Field          Type Null  Key Default Extra\n0       booth_number       int(11)   NO  PRI    None      \n1  booth_price_level   varchar(45)   NO         None      \n2  booth_description  varchar(255)   NO         None      \n3         booth_type   varchar(45)   NO         None       \n\n****************************** customer ******************************\n                 Field         Type Null  Key Default Extra\n0          customer_id      int(11)   NO  PRI    None      \n1  customer_first_name  varchar(45)  YES         None      \n2   customer_last_name  varchar(45)  YES         None      \n3         customer_zip  varchar(45)  YES         None       \n\n****************************** customer_purchases ******************************\n                      Field           Type Null  Key Default Extra\n0                product_id        int(11)   NO  PRI    None      \n1                 vendor_id        int(11)   NO  PRI    None      \n2               market_date           date   NO  PRI    None      \n3               customer_id        int(11)   NO  PRI    None      \n4                  quantity  decimal(16,2)  YES         None      \n5  cost_to_customer_per_qty  decimal(16,2)  YES         None      \n6          transaction_time           time   NO  PRI    None       \n\n****************************** market_date_info ******************************\n                Field          Type Null  Key Default Extra\n0         market_date          date   NO  PRI    None      \n1          market_day   varchar(45)  YES         None      \n2         market_week   varchar(45)  YES         None      \n3         market_year   varchar(45)  YES         None      \n4   market_start_time   varchar(45)  YES         None      \n5     market_end_time   varchar(45)  YES         None      \n6       special_notes          blob  YES         None      \n7       market_season   varchar(45)  YES         None      \n8     market_min_temp  varchar(200)  YES         None      \n9     market_max_temp   varchar(45)  YES         None      \n10   market_rain_flag       int(11)  YES         None      \n11   market_snow_flag       int(11)  YES         None       \n\n****************************** product ******************************\n                 Field         Type Null  Key Default Extra\n0           product_id      int(11)   NO  PRI    None      \n1         product_name  varchar(45)  YES         None      \n2         product_size  varchar(45)  YES         None      \n3  product_category_id      int(11)   NO  PRI    None      \n4     product_qty_type  varchar(45)  YES         None       \n\n****************************** product_category ******************************\n                   Field         Type Null  Key Default           Extra\n0    product_category_id      int(11)   NO  PRI    None  auto_increment\n1  product_category_name  varchar(45)  YES         None                 \n\n****************************** vendor ******************************\n                     Field         Type Null  Key Default           Extra\n0                vendor_id      int(11)   NO  PRI    None  auto_increment\n1              vendor_name  varchar(45)   NO  UNI    None                \n2              vendor_type  varchar(45)   NO         None                \n3  vendor_owner_first_name  varchar(45)   NO         None                \n4   vendor_owner_last_name  varchar(45)   NO         None                 \n\n****************************** vendor_booth_assignments ******************************\n          Field     Type Null  Key Default Extra\n0     vendor_id  int(11)   NO  PRI    None      \n1  booth_number  int(11)   NO  PRI    None      \n2   market_date     date   NO  PRI    None       \n\n****************************** vendor_inventory ******************************\n            Field           Type Null  Key Default Extra\n0     market_date           date   NO  PRI    None      \n1        quantity  decimal(16,2)  YES         None      \n2       vendor_id        int(11)   NO  PRI    None      \n3      product_id        int(11)   NO  PRI    None      \n4  original_price  decimal(16,2)  YES         None       \n\n****************************** zip_data ******************************\n                     Field     Type Null  Key Default Extra\n0               zip_code_5  char(5)   NO  PRI    None      \n1  median_household_income    float  YES         None      \n2      percent_high_income    float  YES         None      \n3         percent_under_18    float  YES         None      \n4          percent_over_65    float  YES         None      \n5       people_per_sq_mile    float  YES         None      \n6                 latitude    float  YES         None      \n7                longitude    float  YES         None       \n\n\n\n\nproduct = pd.read_sql('select * from product', db)\nproduct.info()\n\n<class 'pandas.core.frame.DataFrame'>\nRangeIndex: 23 entries, 0 to 22\nData columns (total 5 columns):\n #   Column               Non-Null Count  Dtype \n---  ------               --------------  ----- \n 0   product_id           23 non-null     int64 \n 1   product_name         23 non-null     object\n 2   product_size         22 non-null     object\n 3   product_category_id  23 non-null     int64 \n 4   product_qty_type     21 non-null     object\ndtypes: int64(2), object(3)\nmemory usage: 1.0+ KB\n\n\n\npd.read_sql('select product_id from product limit 5', db)\n\n\n\n\n\n  \n    \n      \n      product_id\n    \n  \n  \n    \n      0\n      1\n    \n    \n      1\n      2\n    \n    \n      2\n      3\n    \n    \n      3\n      9\n    \n    \n      4\n      12"
   },
   {
+    "objectID": "posts/nbs/handle_missing_data.html",
+    "href": "posts/nbs/handle_missing_data.html",
+    "title": "Handling missing data",
+    "section": "",
+    "text": "In Pandas, there are 4 methods to handle NA values, which are dropna, fillna, isnull, notnull.\n\n\n\n\nflowchart LR\n  A([Handling NA]) --> B(dropna)\n  A --> C(fillna)\n  A --> D(isnull)\n  A --> E(notnull)\n  C --> F[ffill]\n  C --> G[bfill]\n\n\n\n\n\n\nimport pandas as pd\nimport numpy as np\n\n\nstring_data = pd.Series(['apple', 'orange', np.nan, 'avocado'])\nstring_data\n\n0      apple\n1     orange\n2        NaN\n3    avocado\ndtype: object\n\n\n\nstring_data.isna()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.isnull()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data[0] = None\n\n\nstring_data.isnull()\n\n0     True\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.notnull()\n\n0    False\n1     True\n2    False\n3     True\ndtype: bool"
+  },
+  {
     "objectID": "posts/nbs/hf_datasets.html",
     "href": "posts/nbs/hf_datasets.html",
     "title": "Understanding Huggingface datasets",
@@ -399,13 +210,6 @@
     "text": "Load a csv file from remote or local\n\nimport pandas as pd\nimport numpy as np\n\n\ntrn_csv = 'https://raw.githubusercontent.com/youfenglab/nlp-with-huggingface/master/data/train.csv'\ntst_csv = 'https://raw.githubusercontent.com/youfenglab/nlp-with-huggingface/master/data/train.csv'\n\n\ntrn_df = pd.read_csv(trn_csv)\nlabel_cols = trn_df.columns[2:]\nlabel_cols\n\nIndex(['cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar',\n       'conventions'],\n      dtype='object')\n\n\n\ntrn_ds = load_dataset(\"csv\", data_files=trn_csv) # or several files []\ntrn_ds\n\nUsing custom data configuration default-8f5d5f2de1b27b24\nReusing dataset csv (/Users/youfeng/.cache/huggingface/datasets/csv/default-8f5d5f2de1b27b24/0.0.0/652c3096f041ee27b04d2232d41f10547a8fecda3e284a79a0ec4053c916ef7a)\n\n\n\n\n\nDatasetDict({\n    train: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 3911\n    })\n})\n\n\n\n\n\n\n\n\nTip: Load several files\n\n\n\ndata_files= [file1, file2 ...], but the columns of the files should be the same, otherwise you will get error.\n\n\nIf you want to split the training set into train and validation parts, you can do it as below\n\nds = trn_ds['train'].train_test_split(test_size=0.2) # Here we use 20% samples as validation part\nds\n\nDatasetDict({\n    train: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 3128\n    })\n    test: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 783\n    })\n})\n\n\nIf you want to use param “stratify” like scikit-learn, you can do it as below\n\n\n\n\n\n\nWarning\n\n\n\nNote: we need covert the column into ClassLabel column, since in this case the label columns are Value now. Otherwise, we will get an error like this:\nValueError: Stratifying by column is only supported for ClassLabel column, and column cohesion is Value.\n\n\nLet say we want use cohesion column.\n\ntrn_ds\n\nDatasetDict({\n    train: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 3911\n    })\n})\n\n\n\nds = trn_ds.class_encode_column('cohesion')\nds['train'].features\n\nLoading cached processed dataset at /Users/youfeng/.cache/huggingface/datasets/csv/default-8f5d5f2de1b27b24/0.0.0/652c3096f041ee27b04d2232d41f10547a8fecda3e284a79a0ec4053c916ef7a/cache-8be23562eeb71b18.arrow\nLoading cached processed dataset at /Users/youfeng/.cache/huggingface/datasets/csv/default-8f5d5f2de1b27b24/0.0.0/652c3096f041ee27b04d2232d41f10547a8fecda3e284a79a0ec4053c916ef7a/cache-b4dba551c432230d.arrow\nLoading cached processed dataset at /Users/youfeng/.cache/huggingface/datasets/csv/default-8f5d5f2de1b27b24/0.0.0/652c3096f041ee27b04d2232d41f10547a8fecda3e284a79a0ec4053c916ef7a/cache-3e6fbdaa550cb114.arrow\n\n\n{'text_id': Value(dtype='string', id=None),\n 'full_text': Value(dtype='string', id=None),\n 'cohesion': ClassLabel(num_classes=9, names=['1.0', '1.5', '2.0', '2.5', '3.0', '3.5', '4.0', '4.5', '5.0'], id=None),\n 'syntax': Value(dtype='float64', id=None),\n 'vocabulary': Value(dtype='float64', id=None),\n 'phraseology': Value(dtype='float64', id=None),\n 'grammar': Value(dtype='float64', id=None),\n 'conventions': Value(dtype='float64', id=None)}\n\n\n\nds = ds['train'].train_test_split(test_size=0.2, stratify_by_column=\"cohesion\")\nds\n\nDatasetDict({\n    train: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 3128\n    })\n    test: Dataset({\n        features: ['text_id', 'full_text', 'cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions'],\n        num_rows: 783\n    })\n})"
   },
   {
-    "objectID": "posts/nbs/handle_missing_data.html",
-    "href": "posts/nbs/handle_missing_data.html",
-    "title": "Handling missing data",
-    "section": "",
-    "text": "In Pandas, there are 4 methods to handle NA values, which are dropna, fillna, isnull, notnull.\n\n\n\n\nflowchart LR\n  A([Handling NA]) --> B(dropna)\n  A --> C(fillna)\n  A --> D(isnull)\n  A --> E(notnull)\n  C --> F[ffill]\n  C --> G[bfill]\n\n\n\n\n\n\nimport pandas as pd\nimport numpy as np\n\n\nstring_data = pd.Series(['apple', 'orange', np.nan, 'avocado'])\nstring_data\n\n0      apple\n1     orange\n2        NaN\n3    avocado\ndtype: object\n\n\n\nstring_data.isna()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.isnull()\n\n0    False\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data[0] = None\n\n\nstring_data.isnull()\n\n0     True\n1    False\n2     True\n3    False\ndtype: bool\n\n\n\nstring_data.notnull()\n\n0    False\n1     True\n2    False\n3     True\ndtype: bool"
-  },
-  {
     "objectID": "posts/nbs/activation_functions.html",
     "href": "posts/nbs/activation_functions.html",
     "title": "The common activation functions",
@@ -425,5 +229,201 @@
     "title": "Posts",
     "section": "",
     "text": "The common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My latest projects",
+    "section": "",
+    "text": "My latest projects\n\n\n\n\n\n\n\n\n\n\nExtracting and grouping text info by category\n\n\n\ndata cleaning\n\n\nregex\n\n\n\nThis notebook shows matching text pattern and extract text and processing strings using Regex.\n\n\n\nOct 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGenerate English name\n\n\n\ndeep learning\n\n\nnlp\n\n\n\nTrain a language model to generate next character based on the previous characters to output an english name.\n\n\n\nSep 23, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEigenFace\n\n\n\nPCA\n\n\nSVD\n\n\n\nThis notebook will dive into eigenvalues and eigenvectors with covariance matrix. We also compare this method with SVD to understand what happens under the hood.\n\n\n\nMay 26, 2022\n\n\n\n\n\n\n\n\nNo matching items\n\n\n More projects\n\n\n\nMy latest posts\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe common activation functions\n\n\n\n\n\n\n\ndeep learning\n\n\nmath\n\n\n\n\nBasic math for deep learning\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHandling missing data\n\n\n\n\n\n\n\npython\n\n\npandas\n\n\nnumpy\n\n\n\n\nExamples of dealing with missing data\n\n\n\n\n\n\nOct 30, 2022\n\n\n\n\n\n\n  \n\n\n\n\nUnderstanding Huggingface datasets\n\n\n\n\n\n\n\nnlp\n\n\nhuggingface\n\n\n\n\nThis blog will dive into huggingface datasets\n\n\n\n\n\n\nSep 19, 2022\n\n\n\n\n\n\n  \n\n\n\n\nConnect to MySql with Pandas\n\n\n\n\n\n\n\nmysql\n\n\ndatabase\n\n\npandas\n\n\n\n\nThis blog show how to connect to MySql database via Pandas\n\n\n\n\n\n\nAug 19, 2022\n\n\n\n\n\n\nNo matching items\n\n\n More posts"
+  },
+  {
+    "objectID": "tils/nbs/define-a-spark-schema.html",
+    "href": "tils/nbs/define-a-spark-schema.html",
+    "title": "Define a spark schema",
+    "section": "",
+    "text": "from pyspark.sql.types import *\nfrom pyspark.sql import SparkSession\n\n\nspark = SparkSession.builder.appName('Simple-table').getOrCreate()"
+  },
+  {
+    "objectID": "tils/nbs/define-a-spark-schema.html#define-it-programmatically",
+    "href": "tils/nbs/define-a-spark-schema.html#define-it-programmatically",
+    "title": "Define a spark schema",
+    "section": "Define it programmatically",
+    "text": "Define it programmatically\n\nschema = StructType([StructField(\"first name\", StringType(), False), \n                     StructField(\"last name\", StringType(), False), \n                     StructField(\"weight\", IntegerType(), False)])\n\n\nschema\n\nStructType([StructField('first name', StringType(), False), StructField('last name', StringType(), False), StructField('weight', IntegerType(), False)])\n\n\nFalse indicate whether the field can be null (None) or not.\n\ndata = [['Jake', 'Z', 60], ['Tom', 'X', 50]]\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first name|last name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+"
+  },
+  {
+    "objectID": "tils/nbs/define-a-spark-schema.html#define-it-using-ddl",
+    "href": "tils/nbs/define-a-spark-schema.html#define-it-using-ddl",
+    "title": "Define a spark schema",
+    "section": "Define it using DDL",
+    "text": "Define it using DDL\nThis method is much simper.\n\nschema = \"first_name STRING, last_name STRING, weight INT\"\n\n\nschema\n\n'first_name STRING, last_name STRING, weight INT'\n\n\n\ndf = spark.createDataFrame(data, schema)\ndf.show()\n\n+----------+---------+------+\n|first_name|last_name|weight|\n+----------+---------+------+\n|      Jake|        Z|    60|\n|       Tom|        X|    50|\n+----------+---------+------+\n\n\n\n\n\n\n\n\n\nWarning\n\n\n\nA disadvantage of this method is we cannot put space or - between words."
+  },
+  {
+    "objectID": "tils/nbs/define-a-spark-schema.html#stop-spark-session",
+    "href": "tils/nbs/define-a-spark-schema.html#stop-spark-session",
+    "title": "Define a spark schema",
+    "section": "Stop spark session",
+    "text": "Stop spark session\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/expressivity-and-composability-of-spark.html",
+    "href": "tils/nbs/expressivity-and-composability-of-spark.html",
+    "title": "Expressivity and composability of Spark",
+    "section": "",
+    "text": "from pyspark import SparkContext\n\nsc = SparkContext('local')\n\n\ndataRDD = sc.parallelize([('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)])\n\n\ndataRDD.first()\n\n('Brooke', 20)\n\n\n\ndataRDD.collect() # only use when the dataset is small\n\n[('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)]\n\n\n\ndataRDD.take(2) # use `take(n)` to get the first n rows\n\n[('Brooke', 20), ('Denny', 31)]\n\n\n\nmapedRDD = dataRDD.map(lambda x: (x[0], (x[1], 1)))\nmapedRDD.collect()\n\n[('Brooke', (20, 1)),\n ('Denny', (31, 1)),\n ('Jules', (30, 1)),\n ('TD', (35, 1)),\n ('Brooke', (25, 1))]\n\n\n\nreducedRDD = mapedRDD.reduceByKey(lambda x, y: (x[0] + y[0], x[1] + y[1]))\nreducedRDD.collect()\n\n[('Brooke', (45, 2)), ('Denny', (31, 1)), ('Jules', (30, 1)), ('TD', (35, 1))]\n\n\n\nmapedRDD = reducedRDD.map(lambda x: (x[0], x[1][0]/x[1][1]))\nmapedRDD.collect()\n\n[('Brooke', 22.5), ('Denny', 31.0), ('Jules', 30.0), ('TD', 35.0)]\n\n\n\nsc.stop()"
+  },
+  {
+    "objectID": "tils/nbs/expressivity-and-composability-of-spark.html#with-high-level-dsl-operates-and-dataframe-api-structured",
+    "href": "tils/nbs/expressivity-and-composability-of-spark.html#with-high-level-dsl-operates-and-dataframe-api-structured",
+    "title": "Expressivity and composability of Spark",
+    "section": "With high-level DSL operates and DataFrame API (structured)",
+    "text": "With high-level DSL operates and DataFrame API (structured)\n\nDSL: domain specific language\n\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\n\nspark = SparkSession.builder.appName('AvgAges').getOrCreate()\n\n\ndata_df = spark.createDataFrame([('Brooke', 20), ('Denny', 31), ('Jules', 30), ('TD', 35), ('Brooke', 25)], \n                                ['name', 'age'])\ndata_df.show()\n\n[Stage 0:>                                                          (0 + 1) / 1]                                                                                \n\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n| Denny| 31|\n| Jules| 30|\n|    TD| 35|\n|Brooke| 25|\n+------+---+\n\n\n\n\ndata_df.show(1)\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n+------+---+\nonly showing top 1 row\n\n\n\n\ndata_df.take(2) # Get the first 2 rows\n\n[Row(name='Brooke', age=20), Row(name='Denny', age=31)]\n\n\n\ndata_df.tail(2) # Get the last 3 rows\n\n[Row(name='TD', age=35), Row(name='Brooke', age=25)]\n\n\n\navg_df = data_df.groupBy('name').agg(avg('age'))\navg_df.show()\n\n+------+--------+\n|  name|avg(age)|\n+------+--------+\n|Brooke|    22.5|\n| Denny|    31.0|\n| Jules|    30.0|\n|    TD|    35.0|\n+------+--------+\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThis version is far more expressive and simpler than the previous one.\n\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/common-dataframe-operations.html",
+    "href": "tils/nbs/common-dataframe-operations.html",
+    "title": "Common DataFrame operations",
+    "section": "",
+    "text": "Tip\n\n\n\nIf we don’t specify the schema, Spark can infer the schema from the data.\nHowever, for large datasets and files, it’s more efficient to define a schema than have Spark infer it.\n\n\n\n\n\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.types import *\n\nspark = SparkSession.builder.appName('CSV-Reader').getOrCreate()\n\n# In python, the syntax is as below.\ndf = spark.read.csv('csv_file_path', header=True, schema=csv_file_schema)\n\n\n\n\n\n\nImportant\n\n\n\ncsv_file_schema is defined before reading the file.\n\n\n\n\n\n\nSave as a parquet fileSave as a parquet table\n\n\nparquet_path = '...'\ndf.write.format(\"parquet\").save(parquet_path)\n\n\nparquet_table = '...'                                   # name of the table\ndf.write.format(\"parquet\").saveAsTable(parquet_table)\n\n\n\n\nSQL table will cover later\n\n\n\n\n# in Spark, projections are done with `select()` method,\n# while filters can be conducted using `filter()` or `where()` method.\nsub_df = df.select([columns list]).where(col(column name == 'some condition'))\nsub_df.show(5, truncate=False)\n\n\n\n\nRenamingAddingDropping\n\n\ndf.withColumnRenamed('name of current column', 'renamed column name')\n\n\ndf.withColumn('target column', 'new_column')\n\n\ndf.drop('columns needed to drop')\n\n\n\nMore details look at book Learning Spark\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/the-useage-of-shutil-module.html",
+    "href": "tils/nbs/the-useage-of-shutil-module.html",
+    "title": "The useage of python shutil module",
+    "section": "",
+    "text": "shutil.copy(src, dst)\n\n\n\nshutil.copy2(src, dst)\n\n\n\nshutil.copytree(src, dst)\n\n\n\nshutil.move(src, dst)"
+  },
+  {
+    "objectID": "tils/nbs/the-useage-of-shutil-module.html#create-and-unpack-archives",
+    "href": "tils/nbs/the-useage-of-shutil-module.html#create-and-unpack-archives",
+    "title": "The useage of python shutil module",
+    "section": "Create and unpack archives",
+    "text": "Create and unpack archives\n\nCreate archives\nshutil.make_archive(archive_name,\n                    'zip',  # the desired output format\n                    root_dir)\n\n# Get a list of supported archive formats\nshutil.get_archive_formats()\n\n[('bztar', \"bzip2'ed tar-file\"),\n ('gztar', \"gzip'ed tar-file\"),\n ('tar', 'uncompressed tar file'),\n ('xztar', \"xz'ed tar-file\"),\n ('zip', 'ZIP file')]\n\n\n\n\nunpack archives\nshutil.unpack_archive(archive_name, \n                      extract_dir)"
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html",
+    "href": "tils/nbs/find-path-of-a-linux-command.html",
+    "title": "Find the path of a Linux command",
+    "section": "",
+    "text": "Suppose we want to find the path of the command spark-submit in terminal, we have 4 ways to do it."
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html#which-command",
+    "href": "tils/nbs/find-path-of-a-linux-command.html#which-command",
+    "title": "Find the path of a Linux command",
+    "section": "1. which command",
+    "text": "1. which command\n\n!which spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\nWith a parameter -a will print all matching paths. In this case, there is only one.\n\n!which -a spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit"
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html#command-command",
+    "href": "tils/nbs/find-path-of-a-linux-command.html#command-command",
+    "title": "Find the path of a Linux command",
+    "section": "2. command command",
+    "text": "2. command command\n\n!command -v spark-submit\n\n/Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n!command -V spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\n\n\n\n\n\n\nWarning\n\n\n\nWe must pass the parameter -v or -V, otherwise, it will run the command."
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html#type-command",
+    "href": "tils/nbs/find-path-of-a-linux-command.html#type-command",
+    "title": "Find the path of a Linux command",
+    "section": "3. type command",
+    "text": "3. type command\nShow the path\n\n!type -p spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition\n\n!type spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the definition, excutable type, and path\n\n!type -a spark-submit\n\nspark-submit is /Users/youfeng/mambaforge/bin/spark-submit"
+  },
+  {
+    "objectID": "tils/nbs/find-path-of-a-linux-command.html#whereis-command",
+    "href": "tils/nbs/find-path-of-a-linux-command.html#whereis-command",
+    "title": "Find the path of a Linux command",
+    "section": "4. whereis command",
+    "text": "4. whereis command\nShow all the locations of the binary, source, manual page\n\n!whereis spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the binary\n\n!whereis -b spark-submit\n\nspark-submit: /Users/youfeng/mambaforge/bin/spark-submit\n\n\nShow the locations of the source"
+  },
+  {
+    "objectID": "tils/nbs/column-and-row-in-spark.html",
+    "href": "tils/nbs/column-and-row-in-spark.html",
+    "title": "Row and column in Spark",
+    "section": "",
+    "text": "from pyspark.sql import SparkSession\nfrom pyspark.sql import Row, Column\nfrom pyspark.sql.functions import expr\n\nspark = SparkSession.builder.appName('col-row').getOrCreate()\n\n\nrows = [Row('Brooke', 20), Row('Denny', 31), Row('Jules', 30), Row('TD', 35), Row('Brooke', 25)]\nrows\n\n[<Row('Brooke', 20)>,\n <Row('Denny', 31)>,\n <Row('Jules', 30)>,\n <Row('TD', 35)>,\n <Row('Brooke', 25)>]\n\n\n\ndf = spark.createDataFrame(rows, ['name', 'age'])\ndf.show()\n\n[Stage 0:>                                                          (0 + 1) / 1]\n\n\n+------+---+\n|  name|age|\n+------+---+\n|Brooke| 20|\n| Denny| 31|\n| Jules| 30|\n|    TD| 35|\n|Brooke| 25|\n+------+---+"
+  },
+  {
+    "objectID": "tils/nbs/column-and-row-in-spark.html#column",
+    "href": "tils/nbs/column-and-row-in-spark.html#column",
+    "title": "Row and column in Spark",
+    "section": "Column",
+    "text": "Column\n\nnew_col = expr(\"age + 3\")\nnew_col\n\nColumn<'(age + 3)'>\n\n\n\ndf.withColumn('age after 3 years', new_col).show()\n\n+------+---+-----------------+\n|  name|age|age after 3 years|\n+------+---+-----------------+\n|Brooke| 20|               23|\n| Denny| 31|               34|\n| Jules| 30|               33|\n|    TD| 35|               38|\n|Brooke| 25|               28|\n+------+---+-----------------+\n\n\n\n\ndf.age\n\nColumn<'age'>\n\n\n\ndf.withColumn('age after 5 years', (df.age + 5)).show()\n\n+------+---+-----------------+\n|  name|age|age after 5 years|\n+------+---+-----------------+\n|Brooke| 20|               25|\n| Denny| 31|               36|\n| Jules| 30|               35|\n|    TD| 35|               40|\n|Brooke| 25|               30|\n+------+---+-----------------+\n\n\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html",
+    "title": "Set up spark in Jupyter Notebook",
+    "section": "",
+    "text": "from pyspark import SparkContext, SparkConf\n\nconf = SparkConf().setMaster('local')\nsc = SparkContext(conf=conf)\n\n\nsc.stop()"
+  },
+  {
+    "objectID": "tils/nbs/setup-spark-in-jupyter-notebook.html#using-high-level-dsl-operators-and-the-dataframe-api",
+    "href": "tils/nbs/setup-spark-in-jupyter-notebook.html#using-high-level-dsl-operators-and-the-dataframe-api",
+    "title": "Set up spark in Jupyter Notebook",
+    "section": "Using high-level DSL operators and the DataFrame API",
+    "text": "Using high-level DSL operators and the DataFrame API\n\nfrom pyspark.sql import SparkSession\n\nspark = SparkSession.builder.appName('chapter2').getOrCreate()\n\n\nspark.stop()"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html",
+    "href": "tils/nbs/image-data-augmentation.html",
+    "title": "Image data augmentation",
+    "section": "",
+    "text": "This notebook will show the common methods used for preparing image data for vision models in PyTorch."
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#load-an-original-image",
+    "href": "tils/nbs/image-data-augmentation.html#load-an-original-image",
+    "title": "Image data augmentation",
+    "section": "Load an original image",
+    "text": "Load an original image\n\nimg = Image.open('images/cat.jpeg')\nimg"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#convert-the-image-to-tensor",
+    "href": "tils/nbs/image-data-augmentation.html#convert-the-image-to-tensor",
+    "title": "Image data augmentation",
+    "section": "Convert the image to Tensor",
+    "text": "Convert the image to Tensor\n\ntoTensor = torchvision.transforms.ToTensor()\ntoTensor(img).shape\n\ntorch.Size([3, 1199, 1200])\n\n\nFrom above, we know that the image size is 1199 * 1200."
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#resize-the-image",
+    "href": "tils/nbs/image-data-augmentation.html#resize-the-image",
+    "title": "Image data augmentation",
+    "section": "Resize the image",
+    "text": "Resize the image\nHere we resize the image to size 224 \\(\\times\\) 224.\n\nresize = torchvision.transforms.Resize(224)\nimg_rs = resize(img)\nimg_rs"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#flip-an-image",
+    "href": "tils/nbs/image-data-augmentation.html#flip-an-image",
+    "title": "Image data augmentation",
+    "section": "Flip an image",
+    "text": "Flip an image\n\n1. Flip horizontally\n\nflip = torchvision.transforms.RandomHorizontalFlip(p=1.0)\nflip(img_rs)\n\n\n\n\n\n\n2. Flip vertically\n\nflip = torchvision.transforms.RandomVerticalFlip(p=1.0)\nflip(img_rs)"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#change-brightness-contrast-saturation-and-hue-of-an-image",
+    "href": "tils/nbs/image-data-augmentation.html#change-brightness-contrast-saturation-and-hue-of-an-image",
+    "title": "Image data augmentation",
+    "section": "Change brightness, contrast, saturation and hue of an image",
+    "text": "Change brightness, contrast, saturation and hue of an image\n\ncolorjitter = torchvision.transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0.3)\ncolorjitter(img_rs)"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#turn-an-image-grayscale",
+    "href": "tils/nbs/image-data-augmentation.html#turn-an-image-grayscale",
+    "title": "Image data augmentation",
+    "section": "Turn an image grayscale",
+    "text": "Turn an image grayscale\n\ngrayscale = torchvision.transforms.Grayscale()\ngrayscale(img_rs)"
+  },
+  {
+    "objectID": "tils/nbs/image-data-augmentation.html#crop-an-image",
+    "href": "tils/nbs/image-data-augmentation.html#crop-an-image",
+    "title": "Image data augmentation",
+    "section": "Crop an image",
+    "text": "Crop an image\n\ncrop = torchvision.transforms.CenterCrop(128)\ncrop(img_rs)"
+  },
+  {
+    "objectID": "tils/index.html",
+    "href": "tils/index.html",
+    "title": "TILs",
+    "section": "",
+    "text": "Date\n\n\nTitle\n\n\n\n\n\n\nNov 22, 2022\n\n\nThe useage of python shutil module\n\n\n\n\nNov 21, 2022\n\n\nExpressivity and composability of Spark\n\n\n\n\nNov 21, 2022\n\n\nCommon DataFrame operations\n\n\n\n\nNov 21, 2022\n\n\nRow and column in Spark\n\n\n\n\nNov 17, 2022\n\n\nDefine a spark schema\n\n\n\n\nNov 15, 2022\n\n\nFind the path of a Linux command\n\n\n\n\nNov 15, 2022\n\n\nSet up spark in Jupyter Notebook\n\n\n\n\nNov 10, 2022\n\n\nImage data augmentation\n\n\n\n\n\n\nNo matching items"
   }
 ]
